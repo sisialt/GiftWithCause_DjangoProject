@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GiftWithCause</title>
+    <link href="{% static 'css/my-index.css' %}" rel="stylesheet">
+</head>
+<body>
+<nav>
+    <a href="/">
+        <img src="{% static 'images/logo.png' %}" width="160" height="80">
+    </a>
+    <div class="main-nav">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Gift Offers</a></li>
+            <li><a href="#services">Gift Searches</a></li>
+            <li><a href="#contact">All creators</a></li>
+            <li><a href="#contact">Login/Register</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="content">
+    <h1>Thank you for helping us!</h1>
+    <div class="search-container">
+        <input type="text" placeholder="Search a gift...">
+        <button>
+            <i>&#x1F50D;</i> <!-- Unicode for magnifying glass -->
+        </button>
+    </div>
+    <p>This is a simple webpage with a navigation bar.</p>
+    <p>Lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, dolores earum ex laborum magni
+        necessitatibus rem sed! A aut eum ipsum libero maxime molestiae perferendis quis quod recusandae reiciendis.
+        Recusandae! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi assumenda beatae dolor
+        dolorem doloribus dolorum earum explicabo hic in ipsam magnam, maiores maxime optio placeat possimus soluta
+        ullam unde? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis delectus nulla repellat vitae?
+        Aperiam at dignissimos distinctio doloribus ea, est et, maxime molestias obcaecati praesentium quod
+        reprehenderit saepe vero vitae?</p>
+</div>
+</body>
+</html>
