@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GiftWithCause</title>
+    <link href="{% static 'css/my-index.css' %}" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav class="header-nav">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" width="140" height="80">
+        </a>
+        <div class="main-nav">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'home' %}">Gift Offers</a></li>
+                <li><a href="{% url 'home' %}">Gift Searches</a></li>
+                <li><a href="{% url 'home' %}">Our Heroes</a></li>
+                <li><a href="{% url 'login' %}">Login/Register</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<footer>
+    <div class="footer-nav">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" width="140" height="80">
+        </a>
+        <div>
+            <ul>
+{#                <li><a href="{% url 'home' %}">Home</a></li>#}
+                <li><a href="https://www.facebook.com/groups/369212334446352">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <p>Created by Silvia Yotovska for Django Advanced final project</p>
+</footer>
+</body>
+</html>
