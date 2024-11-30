@@ -6,12 +6,13 @@
     <meta charset="UTF-8">
     <title>GiftWithCause</title>
     <link href="{% static 'css/my-index.css' %}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <header>
     <nav class="header-nav">
         <a href="{% url 'home' %}">
-            <img src="{% static 'images/logo.png' %}" width="140" height="80">
+            <img src="{% static 'images/logo.png' %}">
         </a>
         <div class="main-nav">
             <ul>
@@ -19,7 +20,7 @@
                 <li><a href="{% url 'home' %}">Gift Offers</a></li>
                 <li><a href="{% url 'home' %}">Gift Searches</a></li>
                 <li><a href="{% url 'home' %}">Our Heroes</a></li>
-                <li><a href="{% url 'login' %}">Login/Register</a></li>
+                <li><a href="{% url 'login' %}"><i class="fa-regular fa-user"></i> Login / Register</a></li>
             </ul>
         </div>
     </nav>
@@ -31,7 +32,7 @@
 <footer>
     <div class="footer-nav">
         <a href="{% url 'home' %}">
-            <img src="{% static 'images/logo.png' %}" width="140" height="80">
+            <img src="{% static 'images/logo.png' %}">
         </a>
         <div>
             <ul>
@@ -40,7 +41,7 @@
             </ul>
         </div>
     </div>
-    <p>Created by Silvia Yotovska for Django Advanced final project</p>
+    <p>Created by Silvia Yotovska for Django Advanced Final Project</p>
 </footer>
 </body>
 </html>
