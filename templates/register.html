@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="content">
+        <div class="login-register-box">
+            <h1>You can register here</h1>
+
+            <!-- Start Login Form-->
+            <form method="post">
+                {% csrf_token %}
+
+                {{ form }}
+
+{#                {{ form.errors }}#}
+{#                {{ form.email }}#}
+{#                {{ form.password1 }}#}
+{#                {{ form.password2 }}#}
+
+                <!-- Login Button-->
+                <button type="submit">Register</button>
+            </form>
+            <!-- End Login Form -->
+
+        </div>
+    </div>
+{% endblock %}

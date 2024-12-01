@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+     <div class="content">
+        <div class="login-register-box">
+            <h1>You can sign in here</h1>
+
+            <!-- Start Login Form-->
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+
+{#                {{ form.errors }}#}
+{#                {{ form.username }}#}
+{#                {{ form.password }}#}
+
+                <!-- Login Button-->
+                <button type="submit">Log in</button>
+            </form>
+            <!-- End Login Form -->
+
+        </div>
+        <div class="second-option">
+
+            <!-- Link to Register Page-->
+            <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        </div>
+    </div>
+{% endblock %}

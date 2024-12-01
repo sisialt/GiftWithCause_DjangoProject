@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="content">
-        <h1>Thank you for helping us!</h1>
+        <h2>Here you can find a perfect gift,<br>made from a parent of a child with disabilities.</h2>
+        <h2>Thank you for your support!</h2>
         <div class="search-container">
             <input type="text" placeholder="Search a gift...">
             <button>
@@ -11,7 +12,23 @@
 
         <div class="posts-container">
 
+            {% for gift in all_gifts %}
+
             <a href="" class="post-card">
+                <h2>{{ gift.title}}</h2>
+                <img src="{{ gift.image }}"
+                     width="60px" height="60px">
+                <h3>Creator {{ gift.creator.user.email }}</h3>
+                <p>Description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at aut
+                    dignissimos dolorum expedita explicabo facere, minima nemo qui quos, reiciendis saepe sed
+                    tenetur, voluptate voluptatum. Aperiam pariatur repellendus sapiente. Lorem ipsum dolor sit
+                    amet, consectetur adipisicing elit. Architecto consequatur eos eveniet facere fugiat hic impedit
+                    incidunt, ipsa maiores officia omnis porro rem rerum tenetur unde. Cumque deleniti enim
+                    similique.</p>
+
+            </a>
+            {% endfor %}
+        <a href="" class="post-card">
                 <h2>First Card Title</h2>
                 <img src="https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194138/image-url-3.jpg"
                      width="60px" height="60px">
@@ -24,6 +41,33 @@
                     similique.</p>
 
             </a>
+        <a href="" class="post-card">
+                <h2>First Card Title</h2>
+                <img src="https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194138/image-url-3.jpg"
+                     width="60px" height="60px">
+                <h3>Creator</h3>
+                <p>Description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at aut
+                    dignissimos dolorum expedita explicabo facere, minima nemo qui quos, reiciendis saepe sed
+                    tenetur, voluptate voluptatum. Aperiam pariatur repellendus sapiente. Lorem ipsum dolor sit
+                    amet, consectetur adipisicing elit. Architecto consequatur eos eveniet facere fugiat hic impedit
+                    incidunt, ipsa maiores officia omnis porro rem rerum tenetur unde. Cumque deleniti enim
+                    similique.</p>
+
+            </a>
+        <a href="" class="post-card">
+                <h2>First Card Title</h2>
+                <img src="https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194138/image-url-3.jpg"
+                     width="60px" height="60px">
+                <h3>Creator</h3>
+                <p>Description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at aut
+                    dignissimos dolorum expedita explicabo facere, minima nemo qui quos, reiciendis saepe sed
+                    tenetur, voluptate voluptatum. Aperiam pariatur repellendus sapiente. Lorem ipsum dolor sit
+                    amet, consectetur adipisicing elit. Architecto consequatur eos eveniet facere fugiat hic impedit
+                    incidunt, ipsa maiores officia omnis porro rem rerum tenetur unde. Cumque deleniti enim
+                    similique.</p>
+
+            </a>
+
         </div>
     </div>
 {% endblock %}

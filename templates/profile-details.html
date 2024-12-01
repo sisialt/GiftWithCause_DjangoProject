@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+     <div class="content">
+        <h1>Profile details</h1>
+        <h2>Profile image</h2>
+        <h2>Profile Full Name</h2>
+        <h2>Profile bio</h2>
+        <a href="{% url 'profile-edit' request.user.pk %}">Edit profile</a>
+    </div>
+{% endblock %}
