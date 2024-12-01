@@ -20,7 +20,11 @@
                 <li><a href="{% url 'home' %}">Gift Offers</a></li>
                 <li><a href="{% url 'home' %}">Gift Searches</a></li>
                 <li><a href="{% url 'home' %}">Our Heroes</a></li>
-                <li><a href="{% url 'login' %}"><i class="fa-regular fa-user"></i> Login / Register</a></li>
+                {% if not request.user.is_authenticated %}
+                    <li><a href="{% url 'login' %}"><i class="fa-regular fa-user"></i> Login / Register</a></li>
+                {% else %}
+                    <li><a href="{% url 'profile-details' request.user.pk %}"><i class="fa-regular fa-user"></i> {{ request.user.email }}</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -36,7 +40,7 @@
         </a>
         <div>
             <ul>
-{#                <li><a href="{% url 'home' %}">Home</a></li>#}
+                {#                <li><a href="{% url 'home' %}">Home</a></li>#}
                 <li><a href="https://www.facebook.com/groups/369212334446352">Contact Us</a></li>
             </ul>
         </div>
