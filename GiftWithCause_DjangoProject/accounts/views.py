@@ -19,7 +19,9 @@ class AppUserRegisterView(CreateView):
     model = UserModel
     form_class = AppUserCreationForm
     template_name = 'register.html'
-    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return reverse_lazy('profile-edit', kwargs={'pk': self.request.user.pk})
 
     def form_valid(self, form):
         response = super().form_valid(form)
