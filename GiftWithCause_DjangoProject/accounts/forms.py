@@ -10,7 +10,7 @@ UserModel = get_user_model()
 class AppUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = UserModel
-        fields = ('email',)
+        fields = ('email', 'is_creator')
 
 
 class AppUserChangeForm(UserChangeForm):
