@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from GiftWithCause_DjangoProject.gifts.models import Gift
 
-# Create your views here.
+
+class GiftOffersView(ListView):
+    model = Gift
+    template_name = 'gifts.html'
+    context_object_name = 'all_gifts'
+
