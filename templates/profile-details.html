@@ -1,14 +1,55 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <div class="content">
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button class="button" type="submit"><i>Logout</i></button>
-        </form>
-        <h1>Profile details</h1>
-        <h2>Profile image</h2>
-        <h2>Profile Full Name</h2>
-        <h2>Profile bio</h2>
-        <a href="{% url 'profile-edit' request.user.pk %}">Edit profile</a>
+    <h1 style="text-align: left">Profile Details</h1>
+
+    <div class="info-container">
+
+        <div class="image-container">
+            {% if request.user.profile.profile_picture %}
+                <img src="{{ request.user.profile.profile_picture }}">
+            {% else %}
+                <img src="{% static 'images/no-profile-image.jpg' %}">
+            {% endif %}
+        </div>
+
+        <div class="more-info-container">
+            <h3>Full Name: {{ request.user.profile.get_full_name }}</h3>
+            <h3>More Information:<br>{{ request.user.profile.get_bio }}</h3>
+        </div>
+
+        <div class="buttons-container">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="profile-button logout-button" type="submit"><i
+                        class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </form>
+            <a class="profile-button" href="{% url 'profile-edit' request.user.pk %}"><i
+                    class="fa-regular fa-pen-to-square"></i> Edit</a>
+            <a class="profile-button" href="{% url 'profile-delete' request.user.pk %}"><i
+                    class="fa-solid fa-trash-can"></i> Delete</a>
+
+        </div>
+
     </div>
+
+    <h1 style="text-align: left">Published Gifts</h1>
+
+    <ul class="posts-container">
+        <a href="" class="post-card">
+            <h2>First Card Title</h2>
+            <img src="https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194138/image-url-3.jpg"
+                 width="60px" height="60px">
+            <h3>Creator</h3>
+            <p>Description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at aut
+                dignissimos dolorum expedita explicabo facere, minima nemo qui quos, reiciendis saepe sed
+                tenetur, voluptate voluptatum. Aperiam pariatur repellendus sapiente. Lorem ipsum dolor sit
+                amet, consectetur adipisicing elit. Architecto consequatur eos eveniet facere fugiat hic impedit
+                incidunt, ipsa maiores officia omnis porro rem rerum tenetur unde. Cumque deleniti enim
+                similique.</p>
+
+        </a>
+
+    </ul>
 {% endblock %}
