@@ -14,6 +14,9 @@ UserModel = get_user_model()
 class AppUserLoginView(LoginView):
     template_name = 'login.html'
 
+    def get_success_url(self):
+        return reverse_lazy('profile-details', kwargs={'pk': self.request.user.pk})
+
 
 class AppUserRegisterView(CreateView):
     model = UserModel
