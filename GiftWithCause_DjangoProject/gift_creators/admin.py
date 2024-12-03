@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from GiftWithCause_DjangoProject.gift_creators.models import GiftCreator
+
+
+@admin.register(GiftCreator)
+class GiftCreatorAdmin(admin.ModelAdmin):
+    # list_display = ('id', )
+    pass

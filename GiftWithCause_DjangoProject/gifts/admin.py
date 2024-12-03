@@ -1,3 +1,7 @@
 from django.contrib import admin
+from GiftWithCause_DjangoProject.gifts.models import Gift
 
-# Register your models here.
+
+@admin.register(Gift)
+class GiftAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image', 'description', 'price', ) # add creator

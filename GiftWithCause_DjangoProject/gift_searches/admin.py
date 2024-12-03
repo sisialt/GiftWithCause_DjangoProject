@@ -1,3 +1,7 @@
 from django.contrib import admin
+from GiftWithCause_DjangoProject.gift_searches.models import GiftSearch
 
-# Register your models here.
+
+@admin.register(GiftSearch)
+class GiftSearchAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image', 'up_to_price', 'user')
