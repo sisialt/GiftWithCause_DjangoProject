@@ -17,21 +17,24 @@
         <div class="main-nav">
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'home' %}">Gift Offers</a></li>
-                <li><a href="{% url 'home' %}">Gift Searches</a></li>
-                <li><a href="{% url 'home' %}">Our Heroes</a></li>
+                <li><a href="{% url 'gift-offers' %}">Gift Offers</a></li>
+                <li><a href="{% url 'gift-searches' %}">Gift Searches</a></li>
+                <li><a href="{% url 'gift-creators' %}">Our Heroes</a></li>
                 {% if not request.user.is_authenticated %}
                     <li><a href="{% url 'login' %}"><i class="fa-regular fa-user"></i> Login / Register</a></li>
                 {% else %}
-                    <li><a href="{% url 'profile-details' request.user.pk %}"><i class="fa-regular fa-user"></i> {{ request.user.email }}</a></li>
+                    <li><a href="{% url 'profile-details' request.user.pk %}"><i
+                            class="fa-regular fa-user"></i> {{ request.user.email }}</a></li>
                 {% endif %}
             </ul>
         </div>
     </nav>
 </header>
 <main>
-    {% block content %}
-    {% endblock %}
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
 </main>
 <footer>
     <div class="footer-nav">
