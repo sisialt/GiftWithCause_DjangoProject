@@ -40,3 +40,8 @@ class Profile(models.Model):
 
         return self.first_name or self.last_name or "Anonymous"
 
+    def get_bio(self):
+        if self.bio:
+            return self.bio
+
+        return "No bio added."
