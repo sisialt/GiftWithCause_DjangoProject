@@ -1,6 +1,6 @@
 from django.urls import path
-
+from GiftWithCause_DjangoProject.gift_searches import views
 
 urlpatterns = [
-    # path('', views.HomeView.as_view(), name="home"),
+    path('', views.GiftSearchesView.as_view(), name="gift-searches"),
 ]
