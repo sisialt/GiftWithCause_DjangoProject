@@ -21,7 +21,7 @@ class AppUserAdmin(UserAdmin):
     add_form = AppUserCreationForm
     form = AppUserChangeForm
 
-    list_display = ('pk', 'email', 'is_staff', 'is_superuser')
+    list_display = ('pk', 'email', 'is_staff', 'is_superuser', 'is_creator')
     search_fields = ('email',)
     ordering = ('pk',)
 
@@ -36,7 +36,7 @@ class AppUserAdmin(UserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", "password1", "password2"),
+                "fields": ("email", "password1", "password2", "is_creator"),
             },
         ),
     )
