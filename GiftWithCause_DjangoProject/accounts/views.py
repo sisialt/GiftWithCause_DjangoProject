@@ -1,7 +1,7 @@
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 
@@ -34,14 +34,19 @@ class AppUserRegisterView(CreateView):
         return response
 
 
-class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Profile
+class AppUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = UserModel
     template_name = 'profile-delete.html'
     success_url = reverse_lazy('login')
 
     def test_func(self):
-        profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
-        return self.request.user == profile.user
+        return self.request.user.pk == self.kwargs['pk']
+
+    def delete(self, request, *args, **kwargs):
+        user = self.get_object()  # Get the user object
+        logout(request)  # Log out the user before deletion
+        user.delete()  # Delete the user and any cascading data
+        return redirect(self.success_url)
 
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
@@ -70,12 +75,7 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.request.user == profile.user
 
     def get_success_url(self):
-        return reverse_lazy(
-            'profile-details',
-            kwargs={
-                'pk': self.object.pk,
-            }
-        )
+        return reverse_lazy('profile-details', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         if self.request.user.is_creator:
@@ -85,3 +85,6 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
                     form.add_error(field, 'All fields are required for creators.')
                     return self.form_invalid(form)
         return super().form_valid(form)
+
+
+
