@@ -24,7 +24,7 @@ class AppUserRegisterView(CreateView):
     template_name = 'register.html'
 
     def get_success_url(self):
-        return reverse_lazy('profile-edit', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('profile-edit', kwargs={'pk': self.object.profile.pk})
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -76,3 +76,12 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
                 'pk': self.object.pk,
             }
         )
+
+    def form_valid(self, form):
+        if self.request.user.is_creator:
+            required_fields = ['first_name', 'last_name', 'profile_picture', 'bio']
+            for field in required_fields:
+                if not getattr(form.instance, field):
+                    form.add_error(field, 'All fields are required for creators.')
+                    return self.form_invalid(form)
+        return super().form_valid(form)

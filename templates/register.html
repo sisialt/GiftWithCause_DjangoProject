@@ -2,12 +2,26 @@
 {% block content %}
     <div>
         <h1>You can register here</h1>
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                {#            {{ form.as_p }}#}
+                <p>{{ form.email.label }}: {{ form.email }}</p>
+                <p>{{ form.email.errors }} </p>
 
-        <form method="post">
-            {% csrf_token %}
-            {{ form }}
+                <p>{{ form.password1.label }}: {{ form.password1 }}</p>
+                <p>{{ form.password1.errors }}</p>
 
-            <button type="submit">Register</button>
-        </form>
+                <p>{{ form.password2.label }}: {{ form.password2 }}</p>
+                <p>{{ form.password2.errors }}</p>
+
+                <p>{{ form.is_creator.label }}: {{ form.is_creator }}</p>
+                <p>{{ form.is_creator.errors }}</p>
+
+                <div style="display: inline-block">
+                    <button class="profile-button" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}
