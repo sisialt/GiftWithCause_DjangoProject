@@ -228,3 +228,7 @@ footer {
     justify-content: center;
     align-items: center;
 }
+
+.errorlist {
+    color: darkred;
+}
