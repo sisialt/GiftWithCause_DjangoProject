@@ -6,4 +6,5 @@ class GiftOffersView(ListView):
     model = Gift
     template_name = 'gifts.html'
     context_object_name = 'all_gifts'
+    paginate_by = 1
 
