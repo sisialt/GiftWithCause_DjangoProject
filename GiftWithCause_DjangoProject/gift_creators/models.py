@@ -10,6 +10,7 @@ class GiftCreator(models.Model):
         to=UserModel,
         primary_key=True,
         on_delete=models.CASCADE,
+        related_name='gift_creator',
     )
 
     def __str__(self):
