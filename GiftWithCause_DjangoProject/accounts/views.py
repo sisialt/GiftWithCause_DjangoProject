@@ -52,6 +52,10 @@ class AppUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = UserModel
     template_name = 'profile-details.html'
+    context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(UserModel, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
