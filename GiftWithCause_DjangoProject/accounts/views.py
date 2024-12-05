@@ -3,10 +3,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView, ListView
 
 from GiftWithCause_DjangoProject.accounts.forms import AppUserCreationForm, ProfileEditForm
 from GiftWithCause_DjangoProject.accounts.models import Profile
+from GiftWithCause_DjangoProject.gift_creators.models import GiftCreator
+from GiftWithCause_DjangoProject.gifts.models import Gift
 
 UserModel = get_user_model()
 
@@ -84,11 +86,30 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         if self.request.user.is_creator:
             required_fields = ['first_name', 'last_name', 'profile_picture', 'bio']
+
             for field in required_fields:
                 if not getattr(form.instance, field):
                     form.add_error(field, 'All fields are required for creators.')
                     return self.form_invalid(form)
+
         return super().form_valid(form)
 
 
+class ProfilePublishedGiftsView(ListView):
+    model = Gift
+    template_name = 'published-gifts.html'
+    context_object_name = 'published_gifts'
+    paginate_by = 1
+
+    def get_queryset(self):
+        creator = get_object_or_404(GiftCreator, pk=self.kwargs['pk'])
+
+        return Gift.objects.filter(creator=creator)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['profile'] = get_object_or_404(Profile, pk=self.kwargs['pk'])
+
+        return context
 
