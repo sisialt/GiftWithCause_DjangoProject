@@ -39,4 +39,22 @@
 
     <h1 style="text-align: left">Published Gifts</h1>
 
+    {% if user.is_creator and user.giftcreator.gifts.count > 0 %}
+
+        <ul class="posts-container">
+            {% for gift in user.giftcreator.gifts.all|slice:":3" %}
+                <a href="" class="post-card">
+                    <h2>Title: {{ gift.title }}</h2>
+                    <img src="{{ gift.image }}" width="60px" height="60px">
+                    <p>Description: {{ gift.description }}</p>
+                    <p>Price: {{ gift.price }}</p>
+                </a>
+            {% endfor %}
+            {% if user.giftcreator.gifts.count > 1 %}
+                <a href="{% url 'published-gifts' user.pk %}">Load more gifts...</a>
+            {% endif %}
+        </ul>
+    {% else %}
+        <h3 style="text-align: left">There are no published gifts yet.</h3>
+    {% endif %}
 {% endblock %}
