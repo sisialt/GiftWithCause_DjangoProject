@@ -43,4 +43,23 @@ class GiftDetailView(DetailView):
     template_name = 'gift-details.html'
 
 
+class GiftEditView(UpdateView):
+    model = Gift
+    form_class = GiftEditForm
+    template_name = 'gift-edit.html'
+    success_url = reverse_lazy('gift-details')
+
+
+class GiftDeleteView(DeleteView):
+    model = Gift
+    form_class = GiftDeleteForm
+    template_name = 'gift-delete.html'
+    success_url = reverse_lazy('home')
+
+    def get_initial(self):
+        return self.object.__dict__
+
+    def form_invalid(self, form):
+        return self.form_valid(form)
+
 
