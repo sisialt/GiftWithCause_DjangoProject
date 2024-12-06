@@ -2,6 +2,8 @@
 {% block content %}
     <h1>Gift Searches</h1>
 
+    <a class="profile-button add-gift" href="{% url 'gift-create' %}">Create new gift search</a>
+
     <div class="posts-container">
         {% for gift in all_gifts %}
             <a href="" class="post-card">
