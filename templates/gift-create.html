@@ -1,4 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Gift Create</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {#            {{ form.as_p }}#}
+        <p>{{ form.title.label }} {{ form.title }}</p>
+        <p>{{ form.title.errors }} </p>
+
+        <p>{{ form.image.label }} {{ form.image }}</p>
+        <p>{{ form.image.errors }}</p>
+
+        <p>{{ form.description.label }} {{ form.description }}</p>
+        <p>{{ form.description.errors }}</p>
+
+        <p>{{ form.price.label }} {{ form.price }}</p>
+        <p>{{ form.price.errors }}</p>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div style="display: inline-block">
+            <button class="profile-button" type="submit">Create</button>
+        </div>
+    </form>
 {% endblock %}
