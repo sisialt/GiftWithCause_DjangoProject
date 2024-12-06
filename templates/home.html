@@ -11,20 +11,20 @@
     </form>
 
     <div class="posts-container">
-    {% if all_gifts %}
-        {% for gift in all_gifts %}
-            <a href="" class="post-card">
-                <h2>{{ gift.title }}</h2>
-                <img src="{{ gift.image }}"
-                     width="60px" height="60px">
-                <h3>Creator {{ gift.creator.user.email }}</h3>
-                <p>Description {{ gift.description }}</p>
-                <p>Price {{ gift.price }}</p>
-            </a>
-        {% endfor %}
+        {% if all_gifts %}
+            {% for gift in all_gifts %}
+                <a href="{% url 'gift-details' gift.pk %}" class="post-card">
+                    <h2>{{ gift.title }}</h2>
+                    <img src="{{ gift.image }}"
+                         width="60px" height="60px">
+                    <h3>Creator {{ gift.creator.user.email }}</h3>
+                    <p>Description {{ gift.description }}</p>
+                    <p>Price {{ gift.price }}</p>
+                </a>
+            {% endfor %}
         {% else %}
-        <h2>There are no gifts, that contain "{{ searched_gift }}"...</h2>
-    {% endif %}
+            <h2>There are no gifts, that contain "{{ searched_gift }}"...</h2>
+        {% endif %}
     </div>
 
     <div class="pagination">
