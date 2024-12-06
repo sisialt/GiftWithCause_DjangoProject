@@ -2,9 +2,13 @@
 {% block content %}
     <h1>Gifts</h1>
 
+    {% if request.user.is_creator %}
+        <a class="profile-button add-gift" href="{% url 'gift-create' %}">Create new gift offer</a>
+    {% endif %}
+
     <div class="posts-container">
         {% for gift in all_gifts %}
-            <a href="" class="post-card">
+            <a href="{% url 'gift-details' gift.pk %}" class="post-card">
                 <h2>{{ gift.title }}</h2>
                 <img src="{{ gift.image }}"
                      width="60px" height="60px">
