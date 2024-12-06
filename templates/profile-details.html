@@ -7,9 +7,9 @@
 
         <div class="image-container">
             {% if user.profile.profile_picture %}
-                <img src="{{ user.profile.profile_picture }}">
+                <img src="{{ user.profile.profile_picture }}" width="200px" height="200px">
             {% else %}
-                <img src="{% static 'images/no-profile-image.jpg' %}">
+                <img src="{% static 'images/no-profile-image.jpg' %}" width="200px" height="200px">
             {% endif %}
         </div>
 
@@ -37,24 +37,40 @@
 
     </div>
 
-    <h1 style="text-align: left">Published Gifts</h1>
-
-    {% if user.is_creator and user.giftcreator.gifts.count > 0 %}
-
+    <h1 style="text-align: left">Published Searches</h1>
+    {% if user.gift_searches.all.count > 0 %}
         <ul class="posts-container">
-            {% for gift in user.giftcreator.gifts.all|slice:":3" %}
+            {% for gift in user.gift_searches.all %}
                 <a href="" class="post-card">
                     <h2>Title: {{ gift.title }}</h2>
                     <img src="{{ gift.image }}" width="60px" height="60px">
-                    <p>Description: {{ gift.description }}</p>
-                    <p>Price: {{ gift.price }}</p>
+                    <p>Price: {{ gift.up_to_price }}</p>
                 </a>
             {% endfor %}
-            {% if user.giftcreator.gifts.count > 1 %}
-                <a href="{% url 'published-gifts' user.pk %}">Load more gifts...</a>
-            {% endif %}
         </ul>
     {% else %}
-        <h3 style="text-align: left">There are no published gifts yet.</h3>
+        <h3 style="text-align: left">There are no published searches yet.</h3>
+    {% endif %}
+
+    {% if user.is_creator %}
+        <h1 style="text-align: left">Published Gifts</h1>
+
+        {% if user.gift_creator.gifts.count > 0 %}
+            <ul class="posts-container">
+                {% for gift in user.gift_creator.gifts.all|slice:":3" %}
+                    <a href="{% url 'gift-details' gift.pk %}" class="post-card">
+                        <h2>Title: {{ gift.title }}</h2>
+                        <img src="{{ gift.image }}" width="60px" height="60px">
+                        <p>Description: {{ gift.description }}</p>
+                        <p>Price: {{ gift.price }}</p>
+                    </a>
+                {% endfor %}
+                {% if user.gift_creator.gifts.count > 3 %}
+                    <a href="{% url 'published-gifts' user.pk %}">Load more gifts...</a>
+                {% endif %}
+            </ul>
+        {% else %}
+            <h3 style="text-align: left">There are no published gifts yet.</h3>
+        {% endif %}
     {% endif %}
 {% endblock %}
