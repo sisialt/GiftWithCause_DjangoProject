@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Gift Details</h1>
+    <h2>Title: {{ gift.title }}</h2>
+    <img src="{{ gift.image }}" width="60px" height="60px">
+    <h3>Creator: {{ gift.creator.user.email }}</h3>
+    <p>Description: {{ gift.description }}</p>
+    <p>Price: {{ gift.price }}</p>
+
+    {% if request.user == gift.creator.user %}
+        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift" href="{% url 'gift-edit' gift.pk %}"><i
+                class="fa-regular fa-pen-to-square"></i> Edit</a>
+        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift" href="{% url 'gift-delete' gift.pk %}"><i
+                class="fa-solid fa-trash-can"></i> Delete</a>
+    {% endif %}
+{% endblock %}
