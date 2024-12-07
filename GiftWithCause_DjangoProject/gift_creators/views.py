@@ -6,4 +6,4 @@ class GiftCreatorsView(ListView):
     model = GiftCreator
     template_name = 'our-heroes.html'
     context_object_name = 'all_creators'
-    paginate_by = 1
+    paginate_by = 8
