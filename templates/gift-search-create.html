@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Create a Gift Search</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>{{ form.title.label }} {{ form.title }}</p>
+        <p>{{ form.title.errors }} </p>
+
+        <p>{{ form.image.label }} {{ form.image }}</p>
+
+        <p>{{ form.up_to_price.label }} {{ form.up_to_price }}</p>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div style="display: inline-block">
+            <button class="profile-button" type="submit">Create gift search</button>
+        </div>
+    </form>
+{% endblock %}
