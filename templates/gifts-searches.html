@@ -2,11 +2,11 @@
 {% block content %}
     <h1>Gift Searches</h1>
 
-    <a class="profile-button add-gift" href="{% url 'gift-create' %}">Create new gift search</a>
+    <a class="profile-button add-gift" href="{% url 'gift-search-create' %}">Create new gift search</a>
 
     <div class="posts-container">
         {% for gift in all_gifts %}
-            <a href="" class="post-card">
+            <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
                 <p>{{ gift.user.email }} is searching for: </p>
                 <h3>{{ gift.title }}</h3>
 
