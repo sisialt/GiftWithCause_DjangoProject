@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Gift Search Details</h1>
+    <h2>Title: {{ giftsearch.title }}</h2>
+
+    {% if giftsearch.image %}
+        <img src="{{ gift.image }}" width="60px" height="60px">
+    {% endif %}
+
+    <h3>Creator: {{ giftsearch.user.email }}</h3>
+    <p>Up to price: {{ giftsearch.up_to_price }}</p>
+
+    {% if request.user == giftsearch.user %}
+        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
+           href="{% url 'gift-search-edit' giftsearch.pk %}"><i
+                class="fa-regular fa-pen-to-square"></i> Edit</a>
+        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
+           href="{% url 'gift-search-delete' giftsearch.pk %}"><i
+                class="fa-solid fa-trash-can"></i> Delete</a>
+    {% endif %}
+{% endblock %}
