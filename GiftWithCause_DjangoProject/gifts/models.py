@@ -1,5 +1,6 @@
 from django.core import validators
 from django.db import models
+from django.utils.timezone import now
 
 
 class Gift(models.Model):
@@ -17,6 +18,10 @@ class Gift(models.Model):
         validators=[
             validators.MinValueValidator(0.0),
         ]
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
     )
 
     creator = models.ForeignKey(

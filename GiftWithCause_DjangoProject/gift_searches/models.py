@@ -1,5 +1,6 @@
 from django.core import validators
 from django.db import models
+from django.utils.timezone import now
 
 
 class GiftSearch(models.Model):
@@ -20,6 +21,10 @@ class GiftSearch(models.Model):
         ],
         null=True,
         blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
     )
 
     user = models.ForeignKey(
