@@ -9,6 +9,7 @@
 
     <h3>Creator: {{ giftsearch.user.email }}</h3>
     <p>Up to price: {{ giftsearch.up_to_price }}</p>
+    <p style="font-style: italic; color: darkgrey ">Posted on: {{ giftsearch.created_at }}</p>
 
     {% if request.user == giftsearch.user %}
         <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
