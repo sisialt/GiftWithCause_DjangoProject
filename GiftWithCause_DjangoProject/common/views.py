@@ -2,33 +2,28 @@ from django.db.models import Q
 from django.views.generic import ListView
 
 from GiftWithCause_DjangoProject.common.forms import SearchForm
+from GiftWithCause_DjangoProject.gift_searches.models import GiftSearch
 from GiftWithCause_DjangoProject.gifts.models import Gift
 
 
-# Create your views here.
 class HomeView(ListView):
     model = Gift
     template_name = 'home.html'
-    context_object_name = 'all_gifts'
-    paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['search_form'] = SearchForm(self.request.GET)
-
         searched_gift = self.request.GET.get('gift', '')
         context['searched_gift'] = searched_gift
 
+        context['search_form'] = SearchForm(self.request.GET)
+
+        context['gift_offers'] = Gift.objects.filter(
+            Q(title__icontains=searched_gift) | Q(description__icontains=searched_gift)
+        ).order_by('-created_at')[:4]
+
+        context['gift_searches'] = GiftSearch.objects.filter(
+            title__icontains=searched_gift
+        ).order_by('-created_at')[:4]
+
         return context
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        searched_gift = self.request.GET.get('gift')
-
-        if searched_gift:
-            queryset = queryset.filter(
-                Q(title__icontains=searched_gift) | Q(description__icontains=searched_gift)
-            )
-
-        return queryset
