@@ -10,16 +10,18 @@
         </button>
     </form>
 
+    <h1 style="text-align: left">Latest Gift Offers</h1>
     <div class="posts-container">
-        {% if all_gifts %}
-            {% for gift in all_gifts %}
+
+        {% if gift_offers %}
+            {% for gift in gift_offers %}
                 <a href="{% url 'gift-details' gift.pk %}" class="post-card">
                     <h2>{{ gift.title }}</h2>
-                    <img src="{{ gift.image }}"
-                         width="60px" height="60px">
-                    <h3>Creator {{ gift.creator.user.email }}</h3>
-                    <p>Description {{ gift.description }}</p>
-                    <p>Price {{ gift.price }}</p>
+                    <img src="{{ gift.image }}" width="60px" height="60px">
+                    <p>Description: {{ gift.description }}</p>
+                    <p>Price: {{ gift.price }}</p>
+                    <p style="font-style: italic; color: darkgrey ">Created from: {{ gift.creator.user.email }}</p>
+                    <p style="font-style: italic; color: darkgrey ">Posted on: {{ gift.created_at }}</p>
                 </a>
             {% endfor %}
         {% else %}
@@ -27,17 +29,20 @@
         {% endif %}
     </div>
 
-    <div class="pagination">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">First</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
-
-        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    <h1 style="text-align: left">Latest Gift Searches<br/></h1>
+    <div class="posts-container">
+        {% if gift_searches %}
+            {% for gift in gift_searches %}
+                <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
+                    <p>{{ gift.user.email }} is searching for</p>
+                    <h2>{{ gift.title }}</h2>
+                    <img src="{{ gift.image }}" width="60px" height="60px">
+                    <p>Up To Price: {{ gift.up_to_price }}</p>
+                    <p style="font-style: italic; color: darkgrey">Posted at: {{ gift.created_at }}</p>
+                </a>
+            {% endfor %}
+        {% else %}
+            <h2>There are no gift searches, that contain "{{ searched_gift }}"...</h2>
         {% endif %}
     </div>
 {% endblock %}
