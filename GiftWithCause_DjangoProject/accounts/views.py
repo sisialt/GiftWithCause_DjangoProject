@@ -63,6 +63,7 @@ class ProfileDetailView(DetailView):
         context = super().get_context_data(**kwargs)
 
         context['comments'] = self.object.comments.all()
+        context['favourites'] = self.object.favourites.all()
 
         # photos_with_likes = self.object.photo_set.annotate(likes_count=Count('like'))
         #
