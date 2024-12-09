@@ -43,7 +43,9 @@
             {% for gift in user.gift_searches.all %}
                 <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
                     <h2>Title: {{ gift.title }}</h2>
-                    <img src="{{ gift.image }}" width="60px" height="60px">
+                    {% if gift.image %}
+                        <img src="{{ gift.image }}" width="60px" height="60px">
+                    {% endif %}
                     <p>Price: {{ gift.up_to_price }}</p>
                 </a>
             {% endfor %}
