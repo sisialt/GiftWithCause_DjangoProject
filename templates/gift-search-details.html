@@ -12,19 +12,29 @@
     <p style="font-style: italic; color: darkgrey ">Posted on: {{ giftsearch.created_at }}</p>
 
     <h2>Comments:</h2>
+
     {% if comments %}
         {% for comment in comments %}
-            <p>{{ comment.author.email }}: {{ comment }}</p>
+            <div>
+                <p style="display: inline-block">{{ comment.author.email }}: {{ comment }}</p>
+
+                {% if request.user == comment.author %}
+                    <form style="display: inline-block" method="post"
+                          action="{% url 'gift-search-comment-delete' giftsearch.pk comment.pk %}">
+                        {% csrf_token %}
+                        <button><i class="fa-solid fa-trash"></i> Delete comment</button>
+                    </form>
+                {% endif %}
+            </div>
         {% endfor %}
     {% else %}
         <p>There are no comments for this post yet.</p>
     {% endif %}
-    <form action="post">
+
+    <form method="post" action="{% url 'gift-search-comment' giftsearch.pk 1 %}">
         {% csrf_token %}
         {{ comment_form.text }}
-        <button>
-            <i class="fa-solid fa-pen"></i>
-        </button>
+        <button>Add comment</button>
     </form>
 
     {% if request.user == giftsearch.user %}

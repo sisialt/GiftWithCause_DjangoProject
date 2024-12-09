@@ -10,25 +10,37 @@
     <p style="font-style: italic; color: darkgrey ">Posted on: {{ gift.created_at }}</p>
 
     <h2>Comments:</h2>
+
     {% if comments %}
         {% for comment in comments %}
-            <p>{{ comment.author.email }}: {{ comment}}</p>
+            <div>
+                <p style="display: inline-block">{{ comment.author.email }}: {{ comment }}</p>
+
+                {% if request.user == comment.author %}
+                    <form style="display: inline-block" method="post"
+                          action="{% url 'gift-comment-delete' gift.pk comment.pk %}">
+                        {% csrf_token %}
+                        <button><i class="fa-solid fa-trash"></i> Delete comment</button>
+                    </form>
+                {% endif %}
+            </div>
         {% endfor %}
     {% else %}
         <p>There are no comments for this post yet.</p>
     {% endif %}
-    <form action="post">
+
+    <form method="post" action="{% url 'gift-comment' gift.pk 0 %}">
         {% csrf_token %}
         {{ comment_form.text }}
-        <button>
-            <i class="fa-solid fa-pen"></i>
-        </button>
+        <button>Add comment</button>
     </form>
 
     {% if request.user == gift.creator.user %}
-        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift" href="{% url 'gift-edit' gift.pk %}">
+        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
+           href="{% url 'gift-edit' gift.pk %}">
             <i class="fa-regular fa-pen-to-square"></i> Edit</a>
-        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift" href="{% url 'gift-delete' gift.pk %}">
+        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
+           href="{% url 'gift-delete' gift.pk %}">
             <i class="fa-solid fa-trash-can"></i> Delete</a>
     {% endif %}
 {% endblock %}
