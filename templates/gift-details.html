@@ -4,7 +4,7 @@
 
     <h2>Title: {{ gift.title }}</h2>
     <img src="{{ gift.image }}" width="60px" height="60px">
-    <h3>Creator: {{ gift.creator.user.email }}</h3>
+    <h3>Creator: <a href="{% url 'profile-details' gift.creator.user.id %}">{{ gift.creator.user.email }}</a></h3>
     <p>Description: {{ gift.description }}</p>
     <p>Price: {{ gift.price }}</p>
     <p style="font-style: italic; color: darkgrey ">Posted on: {{ gift.created_at }}</p>
@@ -14,7 +14,9 @@
     {% if comments %}
         {% for comment in comments %}
             <div>
-                <p style="display: inline-block">{{ comment.author.email }}: {{ comment }}</p>
+                <p style="display: inline-block"><a
+                        href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.email }}</a>: {{ comment }}
+                </p>
 
                 {% if request.user == comment.author %}
                     <form style="display: inline-block" method="post"
