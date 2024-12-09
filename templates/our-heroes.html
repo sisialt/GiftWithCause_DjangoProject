@@ -6,8 +6,7 @@
         {% for creator in all_creators %}
             <a href="{% url 'profile-details' creator.user.profile.pk %}" class="post-card">
                 <h2>{{ creator.user.profile.get_full_name }}</h2>
-                <img src="{{ creator.user.profile.profile_picture }}"
-                     width="60px" height="60px">
+                <img src="{{ creator.user.profile.profile_picture }}" width="60px" height="60px">
                 <p>Description {{ creator.user.profile.get_bio }}</p>
                 <p>Gifts: {{ creator.gifts.count }}</p>
             </a>

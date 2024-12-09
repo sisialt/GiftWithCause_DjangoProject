@@ -20,7 +20,7 @@
                     <img src="{{ gift.image }}" width="60px" height="60px">
                     <p>Description: {{ gift.description }}</p>
                     <p>Price: {{ gift.price }}</p>
-                    <p style="font-style: italic; color: darkgrey ">Created from: {{ gift.creator.user.email }}</p>
+                    <p style="font-style: italic; color: darkgrey ">Created from: {{ gift.creator.user.profile.get_full_name }}</p>
                     <p style="font-style: italic; color: darkgrey ">Posted on: {{ gift.created_at }}</p>
                 </a>
             {% endfor %}
@@ -34,7 +34,7 @@
         {% if gift_searches %}
             {% for gift in gift_searches %}
                 <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
-                    <p>{{ gift.user.email }} is searching for</p>
+                    <p>{{ gift.user.profile.get_full_name }} is searching for</p>
                     <h2>{{ gift.title }}</h2>
                     <img src="{{ gift.image }}" width="60px" height="60px">
                     <p>Up To Price: {{ gift.up_to_price }}</p>

@@ -7,7 +7,7 @@
     <div class="posts-container">
         {% for gift in all_gifts %}
             <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
-                <p>{{ gift.user.email }} is searching for: </p>
+                <p>{{ gift.user.profile.get_full_name }} is searching for: </p>
                 <h3>{{ gift.title }}</h3>
 
                 {% if gift.image %}
@@ -15,6 +15,7 @@
                 {% endif %}
 
                 <p>Up to price: {{ gift.up_to_price }}</p>
+                <p style="font-style: italic; color: darkgrey">Posted at: {{ gift.created_at }}</p>
             </a>
         {% endfor %}
     </div>
