@@ -3,6 +3,8 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 
+from GiftWithCause_DjangoProject.comments.forms import CommentCreateForm
+from GiftWithCause_DjangoProject.comments.models import Comment
 from GiftWithCause_DjangoProject.gifts.forms import GiftCreateForm, GiftEditForm, GiftDeleteForm
 from GiftWithCause_DjangoProject.gifts.models import Gift
 
@@ -46,6 +48,14 @@ class GiftCreateView(CreateView):
 class GiftDetailView(DetailView):
     model = Gift
     template_name = 'gift-details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['comment_form'] = CommentCreateForm(self.request.GET)
+        context['comments'] = Comment.objects.filter(to_gift=self.object)
+
+        return context
 
 
 class GiftEditView(UpdateView):

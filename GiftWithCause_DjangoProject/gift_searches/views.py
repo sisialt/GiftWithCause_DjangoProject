@@ -1,6 +1,8 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
+from GiftWithCause_DjangoProject.comments.forms import CommentCreateForm
+from GiftWithCause_DjangoProject.comments.models import Comment
 from GiftWithCause_DjangoProject.gift_searches.forms import GiftSearchCreateForm, GiftSearchEditForm, \
     GiftSearchDeleteForm
 from GiftWithCause_DjangoProject.gift_searches.models import GiftSearch
@@ -45,6 +47,14 @@ class GiftSearchCreateView(CreateView):
 class GiftSearchDetailView(DetailView):
     model = GiftSearch
     template_name = 'gift-search-details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['comment_form'] = CommentCreateForm(self.request.GET)
+        context['comments'] = Comment.objects.filter(to_gift_search=self.object)
+
+        return context
 
 
 class GiftSearchEditView(UpdateView):
