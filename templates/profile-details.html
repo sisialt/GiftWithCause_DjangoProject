@@ -41,7 +41,7 @@
     {% if user.gift_searches.all.count > 0 %}
         <ul class="posts-container">
             {% for gift in user.gift_searches.all %}
-                <a href="" class="post-card">
+                <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
                     <h2>Title: {{ gift.title }}</h2>
                     <img src="{{ gift.image }}" width="60px" height="60px">
                     <p>Price: {{ gift.up_to_price }}</p>
@@ -72,5 +72,22 @@
         {% else %}
             <h3 style="text-align: left">There are no published gifts yet.</h3>
         {% endif %}
+    {% endif %}
+
+    <h1 style="text-align: left">Published Comments:</h1>
+    {% if comments %}
+        {% for comment in comments %}
+            <div>
+                <p>Published on: {{ comment.created_at }} about</p>
+                {% if comment.to_gift_search %}
+                    <a href="{% url 'gift-search-details' comment.to_gift_search.pk %}">{{ comment.to_gift_search.title }}</a>
+                {% else %}
+                    <a href="{% url 'gift-details' comment.to_gift.pk %}">{{ comment.to_gift.title }}</a>
+                {% endif %}
+                <p>{{ comment }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3 style="text-align: left">There are no published comments yet.</h3>
     {% endif %}
 {% endblock %}
