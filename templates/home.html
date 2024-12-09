@@ -36,7 +36,9 @@
                 <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
                     <p>{{ gift.user.profile.get_full_name }} is searching for</p>
                     <h2>{{ gift.title }}</h2>
-                    <img src="{{ gift.image }}" width="60px" height="60px">
+                    {% if gift.image %}
+                        <img src="{{ gift.image }}" width="60px" height="60px">
+                    {% endif %}
                     <p>Up To Price: {{ gift.up_to_price }}</p>
                     <p style="font-style: italic; color: darkgrey">Posted at: {{ gift.created_at }}</p>
                 </a>
