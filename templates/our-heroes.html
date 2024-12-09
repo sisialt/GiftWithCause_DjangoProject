@@ -2,16 +2,20 @@
 {% block content %}
     <h1>Our Heroes</h1>
 
-    <div class="posts-container">
-        {% for creator in all_creators %}
-            <a href="{% url 'profile-details' creator.user.profile.pk %}" class="post-card">
-                <h2>{{ creator.user.profile.get_full_name }}</h2>
-                <img src="{{ creator.user.profile.profile_picture }}" width="60px" height="60px">
-                <p>Description {{ creator.user.profile.get_bio }}</p>
-                <p>Gifts: {{ creator.gifts.count }}</p>
-            </a>
-        {% endfor %}
-    </div>
+    {% if not all_creators %}
+        <h3>There are no registered heroes yet.</h3>
+    {% else %}
+        <div class="posts-container">
+            {% for creator in all_creators %}
+                <a href="{% url 'profile-details' creator.user.profile.pk %}" class="post-card">
+                    <h2>{{ creator.user.profile.get_full_name }}</h2>
+                    <img src="{{ creator.user.profile.profile_picture }}" width="60px" height="60px">
+                    <p>Description {{ creator.user.profile.get_bio }}</p>
+                    <p>Gifts: {{ creator.gifts.count }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div class="pagination">
         {% if page_obj.has_previous %}
