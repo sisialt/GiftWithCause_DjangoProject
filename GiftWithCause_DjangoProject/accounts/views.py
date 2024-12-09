@@ -99,7 +99,7 @@ class ProfilePublishedGiftsView(ListView):
     model = Gift
     template_name = 'published-gifts.html'
     context_object_name = 'published_gifts'
-    paginate_by = 1
+    paginate_by = 8
 
     def get_queryset(self):
         creator = get_object_or_404(GiftCreator, pk=self.kwargs['pk'])
