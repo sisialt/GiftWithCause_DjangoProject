@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Gift Details</h1>
+
     <h2>Title: {{ gift.title }}</h2>
     <img src="{{ gift.image }}" width="60px" height="60px">
     <h3>Creator: {{ gift.creator.user.email }}</h3>
@@ -8,10 +9,26 @@
     <p>Price: {{ gift.price }}</p>
     <p style="font-style: italic; color: darkgrey ">Posted on: {{ gift.created_at }}</p>
 
+    <h2>Comments:</h2>
+    {% if comments %}
+        {% for comment in comments %}
+            <p>{{ comment.author.email }}: {{ comment}}</p>
+        {% endfor %}
+    {% else %}
+        <p>There are no comments for this post yet.</p>
+    {% endif %}
+    <form action="post">
+        {% csrf_token %}
+        {{ comment_form.text }}
+        <button>
+            <i class="fa-solid fa-pen"></i>
+        </button>
+    </form>
+
     {% if request.user == gift.creator.user %}
-        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift" href="{% url 'gift-edit' gift.pk %}"><i
-                class="fa-regular fa-pen-to-square"></i> Edit</a>
-        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift" href="{% url 'gift-delete' gift.pk %}"><i
-                class="fa-solid fa-trash-can"></i> Delete</a>
+        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift" href="{% url 'gift-edit' gift.pk %}">
+            <i class="fa-regular fa-pen-to-square"></i> Edit</a>
+        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift" href="{% url 'gift-delete' gift.pk %}">
+            <i class="fa-solid fa-trash-can"></i> Delete</a>
     {% endif %}
 {% endblock %}

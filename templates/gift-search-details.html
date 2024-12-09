@@ -11,6 +11,22 @@
     <p>Up to price: {{ giftsearch.up_to_price }}</p>
     <p style="font-style: italic; color: darkgrey ">Posted on: {{ giftsearch.created_at }}</p>
 
+    <h2>Comments:</h2>
+    {% if comments %}
+        {% for comment in comments %}
+            <p>{{ comment.author.email }}: {{ comment }}</p>
+        {% endfor %}
+    {% else %}
+        <p>There are no comments for this post yet.</p>
+    {% endif %}
+    <form action="post">
+        {% csrf_token %}
+        {{ comment_form.text }}
+        <button>
+            <i class="fa-solid fa-pen"></i>
+        </button>
+    </form>
+
     {% if request.user == giftsearch.user %}
         <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
            href="{% url 'gift-search-edit' giftsearch.pk %}"><i
