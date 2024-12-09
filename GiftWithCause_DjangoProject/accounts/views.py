@@ -51,7 +51,7 @@ class AppUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return redirect(self.success_url)
 
 
-class ProfileDetailView(LoginRequiredMixin, DetailView):
+class ProfileDetailView(DetailView):
     model = UserModel
     template_name = 'profile-details.html'
     context_object_name = 'user'
@@ -61,6 +61,8 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        context['comments'] = self.object.comments.all()
 
         # photos_with_likes = self.object.photo_set.annotate(likes_count=Count('like'))
         #
