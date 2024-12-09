@@ -1,3 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -32,14 +35,6 @@ class GiftSearchCreateView(CreateView):
         gift_search = form.save(commit=False)
         creator = self.request.user
 
-        # if not hasattr(creator.user, 'profile') or not creator.user.profile.first_name:
-        #     messages.error(
-        #         self.request,
-        #         "You must complete your profile information before creating a gift."
-        #     )
-        #     return self.form_invalid(form)
-        #     # return redirect('profile-edit', pk=self.request.user.profile.pk)
-
         gift_search.user = creator
         return super().form_valid(form)
 
@@ -57,18 +52,28 @@ class GiftSearchDetailView(DetailView):
         return context
 
 
-class GiftSearchEditView(UpdateView):
+class GiftSearchEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = GiftSearch
     form_class = GiftSearchEditForm
     template_name = 'gift-search-edit.html'
-    success_url = reverse_lazy('gift-search-details')
+
+    def get_success_url(self):
+        return reverse_lazy('gift-search-details', kwargs={'pk': self.object.pk})
+
+    def test_func(self):
+        gift = get_object_or_404(GiftSearch, pk=self.kwargs['pk'])
+        return self.request.user == gift.user
 
 
-class GiftSearchDeleteView(DeleteView):
+class GiftSearchDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = GiftSearch
     form_class = GiftSearchDeleteForm
     template_name = 'gift-search-delete.html'
     success_url = reverse_lazy('home')
+
+    def test_func(self):
+        gift = get_object_or_404(GiftSearch, pk=self.kwargs['pk'])
+        return self.request.user == gift.user
 
     def get_initial(self):
         return self.object.__dict__
