@@ -18,12 +18,16 @@ class Comment(models.Model):
         to='gifts.Gift',
         on_delete=models.CASCADE,
         related_name='comments',
+        null=True,
+        blank=True,
     )
 
     to_gift_search = models.ForeignKey(
         to='gift_searches.GiftSearch',
         on_delete=models.CASCADE,
         related_name='comments',
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
