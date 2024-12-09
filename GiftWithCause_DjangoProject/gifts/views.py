@@ -13,6 +13,11 @@ class GiftOffersView(ListView):
     context_object_name = 'all_gifts'
     paginate_by = 8
 
+    def get_queryset(self):
+        gifts = Gift.objects.order_by('-created_at', 'title')
+
+        return gifts
+
 
 class GiftCreateView(CreateView):
     model = Gift
