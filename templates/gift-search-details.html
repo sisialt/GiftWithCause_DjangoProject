@@ -7,7 +7,7 @@
         <img src="{{ gift.image }}" width="60px" height="60px">
     {% endif %}
 
-    <h3>Creator: {{ giftsearch.user.email }}</h3>
+    <h3>Creator: <a href="{% url 'profile-details' giftsearch.user_id %}">{{ giftsearch.user.email }}</a></h3>
     <p>Up to price: {{ giftsearch.up_to_price }}</p>
     <p style="font-style: italic; color: darkgrey ">Posted on: {{ giftsearch.created_at }}</p>
 
@@ -16,7 +16,7 @@
     {% if comments %}
         {% for comment in comments %}
             <div>
-                <p style="display: inline-block">{{ comment.author.email }}: {{ comment }}</p>
+                <p style="display: inline-block"><a href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.email }}</a>: {{ comment }}</p>
 
                 {% if request.user == comment.author %}
                     <form style="display: inline-block" method="post"
