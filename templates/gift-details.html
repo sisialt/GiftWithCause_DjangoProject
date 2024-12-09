@@ -31,11 +31,16 @@
         <p>There are no comments for this post yet.</p>
     {% endif %}
 
-    <form method="post" action="{% url 'gift-comment' gift.pk 0 %}">
-        {% csrf_token %}
-        {{ comment_form.text }}
-        <button>Add comment</button>
-    </form>
+    {% if not request.user.is_authenticated %}
+        <p style="font-style: italic">You must log in first in order to comment posts</p>
+        <a href="{% url 'login' %}">Go to Login  <i class="fa-solid fa-right-to-bracket"></i></a>
+    {% else %}
+        <form method="post" action="{% url 'gift-comment' gift.pk 0 %}">
+            {% csrf_token %}
+            {{ comment_form.text }}
+            <button>Add comment</button>
+        </form>
+    {% endif %}
 
     {% if request.user == gift.creator.user %}
         <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
