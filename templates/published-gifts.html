@@ -4,11 +4,10 @@
 
     <div class="posts-container">
         {% for gift in published_gifts %}
-            <a href="" class="post-card">
+            <a href="{% url 'gift-details' gift.pk %}" class="post-card">
                 <h2>{{ gift.title }}</h2>
                 <img src="{{ gift.image }}" width="60px" height="60px">
                 <p>Description {{ gift.description }}</p>
-                <p>Cretar {{ gift.creator }}</p>
                 <p>Price {{ gift.price }}</p>
             </a>
         {% endfor %}
