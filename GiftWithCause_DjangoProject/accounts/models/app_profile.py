@@ -45,3 +45,6 @@ class Profile(models.Model):
             return self.bio
 
         return "No bio added."
+
+    def __str__(self):
+        return self.get_full_name()
