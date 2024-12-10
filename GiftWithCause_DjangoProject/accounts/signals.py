@@ -8,10 +8,18 @@ UserModel = get_user_model()
 
 
 @receiver(post_save, sender=UserModel)
-def create_profile_and_creator(sender, instance, created, **kwargs):
+def create_profile_and_manage_giftcreator(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
         if instance.is_creator:
             GiftCreator.objects.create(user=instance)
+
+    else:
+        if instance.is_creator:
+            if not GiftCreator.objects.filter(user=instance).exists():
+                GiftCreator.objects.create(user=instance)
+
+        else:
+            GiftCreator.objects.filter(user=instance).delete()
 
