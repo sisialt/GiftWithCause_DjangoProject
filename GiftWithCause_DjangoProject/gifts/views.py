@@ -49,11 +49,15 @@ class GiftDetailView(DetailView):
     model = Gift
     template_name = 'gift-details.html'
 
+    def get_object(self, queryset=None):
+        return get_object_or_404(Gift, pk=self.kwargs.get('pk'))
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['comment_form'] = CommentCreateForm(self.request.GET)
         context['comments'] = Comment.objects.filter(to_gift=self.object)
+        context['favourites'] = Favourite.objects.filter(to_gift=self.object)
 
         return context
 
