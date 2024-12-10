@@ -3,7 +3,7 @@
     <h1>Gift Details</h1>
 
     {% if request.user.is_authenticated %}
-        {% if not favourites %}
+        {% if not favourite %}
             <a href="{% url 'gift-favourite' gift.pk %}"><i class="fa-regular fa-heart"></i> Add to favourites</a>
         {% else %}
             <a href="{% url 'gift-favourite-delete' gift.pk %}"><i class="fa-solid fa-heart"></i> Remove from favourites</a>

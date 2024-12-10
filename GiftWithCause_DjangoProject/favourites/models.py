@@ -13,3 +13,6 @@ class Favourite(models.Model):
         on_delete=models.CASCADE,
         related_name='favourites',
     )
+
+    def __str__(self):
+        return self.to_gift.title

@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
@@ -70,7 +71,9 @@ class GiftDetailView(DetailView):
 
         context['comment_form'] = CommentCreateForm(self.request.GET)
         context['comments'] = Comment.objects.filter(to_gift=self.object)
-        context['favourites'] = Favourite.objects.filter(to_gift=self.object)
+        context['favourite'] = Favourite.objects.filter(
+            to_gift=self.object, user=self.request.user
+        ).first()
 
         return context
 
