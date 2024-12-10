@@ -1,10 +1,13 @@
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 
+from GiftWithCause_DjangoProject.accounts.models import Profile
 from GiftWithCause_DjangoProject.comments.forms import CommentCreateForm
 from GiftWithCause_DjangoProject.comments.models import Comment
+from GiftWithCause_DjangoProject.favourites.models import Favourite
 from GiftWithCause_DjangoProject.gifts.forms import GiftCreateForm, GiftEditForm, GiftDeleteForm
 from GiftWithCause_DjangoProject.gifts.models import Gift
 
@@ -21,7 +24,7 @@ class GiftOffersView(ListView):
         return gifts
 
 
-class GiftCreateView(CreateView):
+class GiftCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Gift
     form_class = GiftCreateForm
     template_name = 'gift-create.html'
@@ -39,10 +42,20 @@ class GiftCreateView(CreateView):
                 "You must complete your profile information before creating a gift."
             )
             return self.form_invalid(form)
-            # return redirect('profile-edit', pk=self.request.user.profile.pk)
 
         gift.creator = creator
         return super().form_valid(form)
+
+    # raises custom 403 forbidden when logged in no creator tries to create gift
+    def test_func(self):
+        if not self.request.user.is_authenticated:
+            return False
+        return self.request.user.is_creator or self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return render(self.request, '403.html', status=403)  # Custom 403 page
+        return super().handle_no_permission()
 
 
 class GiftDetailView(DetailView):
@@ -62,7 +75,6 @@ class GiftDetailView(DetailView):
         return context
 
 
-class GiftEditView(UpdateView):
 class GiftEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Gift
     form_class = GiftEditForm
@@ -76,7 +88,6 @@ class GiftEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         gift = get_object_or_404(Gift, pk=self.kwargs['pk'])
         return self.request.user == gift.creator.user or self.request.user.is_superuser
 
-class GiftDeleteView(DeleteView):
 
 class GiftDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Gift
