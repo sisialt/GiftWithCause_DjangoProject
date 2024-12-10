@@ -21,12 +21,12 @@ class AppUserAdmin(UserAdmin):
     add_form = AppUserCreationForm
     form = AppUserChangeForm
 
-    list_display = ('pk', 'email', 'is_staff', 'is_superuser', 'is_creator')
-    search_fields = ('email',)
-    ordering = ('pk',)
+    list_display = ('pk', 'email', 'is_staff', 'is_superuser', 'is_creator', )
+    search_fields = ('email', )
+    ordering = ('pk', )
 
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'is_creator')}),
+        ('User Info', {'fields': ('email', 'password', 'is_creator')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login',)}),
     )
@@ -36,7 +36,7 @@ class AppUserAdmin(UserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", "password1", "password2", "is_creator"),
+                "fields": ("email", "password1", "password2", "is_creator", ),
             },
         ),
     )
