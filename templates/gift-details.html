@@ -2,6 +2,14 @@
 {% block content %}
     <h1>Gift Details</h1>
 
+    {% if request.user.is_authenticated %}
+        {% if not favourites %}
+            <a href="{% url 'gift-favourite' gift.pk %}"><i class="fa-regular fa-heart"></i> Add to favourites</a>
+        {% else %}
+            <a href="{% url 'gift-favourite-delete' gift.pk %}"><i class="fa-solid fa-heart"></i> Remove from favourites</a>
+        {% endif %}
+    {% endif %}
+
     <h2>Title: {{ gift.title }}</h2>
     <img src="{{ gift.image }}" width="60px" height="60px">
     <h3>Creator: <a href="{% url 'profile-details' gift.creator.user.id %}">{{ gift.creator.user.email }}</a></h3>
@@ -33,7 +41,7 @@
 
     {% if not request.user.is_authenticated %}
         <p style="font-style: italic">You must log in first in order to comment posts</p>
-        <a href="{% url 'login' %}">Go to Login  <i class="fa-solid fa-right-to-bracket"></i></a>
+        <a href="{% url 'login' %}">Go to Login <i class="fa-solid fa-right-to-bracket"></i></a>
     {% else %}
         <form method="post" action="{% url 'gift-comment' gift.pk 0 %}">
             {% csrf_token %}
