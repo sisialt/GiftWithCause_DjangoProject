@@ -59,17 +59,30 @@ class GiftDetailView(DetailView):
 
 
 class GiftEditView(UpdateView):
+class GiftEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Gift
     form_class = GiftEditForm
     template_name = 'gift-edit.html'
-    success_url = reverse_lazy('gift-details')
 
+    def get_success_url(self):
+        return reverse_lazy('gift-details', kwargs={'pk': self.object.pk})
+
+    # only the creator or admin can edit/delete gifts
+    def test_func(self):
+        gift = get_object_or_404(Gift, pk=self.kwargs['pk'])
+        return self.request.user == gift.creator.user or self.request.user.is_superuser
 
 class GiftDeleteView(DeleteView):
+
+class GiftDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Gift
     form_class = GiftDeleteForm
     template_name = 'gift-delete.html'
     success_url = reverse_lazy('home')
+
+    def test_func(self):
+        gift = get_object_or_404(Gift, pk=self.kwargs['pk'])
+        return self.request.user == gift.creator.user or self.request.user.is_superuser
 
     def get_initial(self):
         return self.object.__dict__
