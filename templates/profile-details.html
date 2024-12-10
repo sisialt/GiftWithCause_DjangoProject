@@ -92,4 +92,19 @@
     {% else %}
         <h3 style="text-align: left">There are no published comments yet.</h3>
     {% endif %}
+
+    {% if request.user == user %}
+        <h1 style="text-align: left">Favourite Gifts:</h1>
+        {% if not favourites %}
+            <h3 style="text-align: left">There are no favourite gifts yet.</h3>
+        {% else %}
+            <ul class="posts-container">
+                {% for favourite in favourites %}
+                    <a href="{% url 'gift-details' favourite.to_gift.pk %}" class="post-card">
+                        <h2>{{ favourite.to_gift.title }}</h2>
+                    </a>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
 {% endblock %}
