@@ -1,11 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Q
-from django.shortcuts import redirect, get_object_or_404, render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 
-from GiftWithCause_DjangoProject.accounts.models import Profile
 from GiftWithCause_DjangoProject.comments.forms import CommentCreateForm
 from GiftWithCause_DjangoProject.comments.models import Comment
 from GiftWithCause_DjangoProject.favourites.models import Favourite

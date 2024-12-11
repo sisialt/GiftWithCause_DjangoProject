@@ -1,13 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from GiftWithCause_DjangoProject.comments.forms import CommentCreateForm
 from GiftWithCause_DjangoProject.comments.models import Comment
-from GiftWithCause_DjangoProject.gift_searches.forms import GiftSearchCreateForm, GiftSearchEditForm, \
-    GiftSearchDeleteForm
+from GiftWithCause_DjangoProject.gift_searches.forms import GiftSearchCreateForm, GiftSearchEditForm, GiftSearchDeleteForm
 from GiftWithCause_DjangoProject.gift_searches.models import GiftSearch
 
 

@@ -36,6 +36,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# DEBUG = True if config('DEBUG') == "True" else False
+#
+# ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
+
 
 # Application definition
 
@@ -98,7 +102,7 @@ DATABASES = {
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
-        'PORT': '1425',
+        'PORT': config('DB_PORT'),
     }
 }
 

@@ -56,9 +56,12 @@ class AppUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user.pk == self.kwargs['pk'] or self.request.user.is_superuser
 
     def delete(self, request, *args, **kwargs):
-        user = self.get_object()  # Get the user object
-        logout(request)  # Log out the user before deletion
-        user.delete()  # Delete the user and any cascading data
+        user = self.get_object()
+
+        logout(request)
+
+        user.delete()
+
         return redirect(self.success_url)
 
 

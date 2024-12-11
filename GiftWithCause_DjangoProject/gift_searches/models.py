@@ -1,6 +1,5 @@
 from django.core import validators
 from django.db import models
-from django.utils.timezone import now
 
 
 class GiftSearch(models.Model):

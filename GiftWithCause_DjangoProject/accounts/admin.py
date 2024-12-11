@@ -8,7 +8,7 @@ from GiftWithCause_DjangoProject.accounts.models import Profile
 UserModel = get_user_model()
 
 
-class ProfileInline(admin.StackedInline):  # Or TabularInline
+class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
     verbose_name_plural = 'Profiles'

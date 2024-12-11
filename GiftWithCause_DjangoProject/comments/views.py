@@ -1,12 +1,8 @@
-from django.shortcuts import render
-from django.views.generic import CreateView, ListView
-
-from GiftWithCause_DjangoProject.comments.forms import CommentCreateForm, CommentEditForm
+from GiftWithCause_DjangoProject.comments.forms import CommentCreateForm
 from GiftWithCause_DjangoProject.comments.models import Comment
 
 from django.views import View
 from django.shortcuts import get_object_or_404, redirect
-from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ..gift_searches.models import GiftSearch
