@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView, ListView
 
-from GiftWithCause_DjangoProject.accounts.forms import AppUserCreationForm, ProfileEditForm
+from GiftWithCause_DjangoProject.accounts.forms import AppUserCreationForm, ProfileEditForm, CustomAuthenticationForm
 from GiftWithCause_DjangoProject.accounts.models import Profile
 from GiftWithCause_DjangoProject.gift_creators.models import GiftCreator
 from GiftWithCause_DjangoProject.gifts.models import Gift
@@ -15,6 +15,7 @@ UserModel = get_user_model()
 
 class AppUserLoginView(LoginView):
     template_name = 'login.html'
+    authentication_form = CustomAuthenticationForm
 
     def get_success_url(self):
         return reverse_lazy('profile-details', kwargs={'pk': self.request.user.pk})
@@ -64,12 +65,6 @@ class ProfileDetailView(DetailView):
 
         context['comments'] = self.object.comments.all()
         context['favourites'] = self.object.favourites.all()
-
-        # photos_with_likes = self.object.photo_set.annotate(likes_count=Count('like'))
-        #
-        # context['total_likes_count'] = sum(photo.likes_count for photo in photos_with_likes)
-        # context['total_pets_count'] = self.object.pet_set.count()
-        # context['total_photos_count'] = self.object.photo_set.count()
 
         return context
 
