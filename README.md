@@ -1,6 +1,9 @@
-![logo.png](static%2Fimages%2Flogo.png)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0643d874-0b73-4b9b-bce0-108f4a99f410" alt="logo-small" />
+</p>
 
 # GiftWithCause
+
 
 This is my first personal project with Django Framework for the final exam of Django Advanced course at SoftUni.
 
