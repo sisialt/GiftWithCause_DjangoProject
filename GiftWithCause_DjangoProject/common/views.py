@@ -20,10 +20,10 @@ class HomeView(ListView):
 
         context['gift_offers'] = Gift.objects.filter(
             Q(title__icontains=searched_gift) | Q(description__icontains=searched_gift)
-        ).order_by('-created_at')[:4]
+        ).order_by('-created_at')[:3]
 
         context['gift_searches'] = GiftSearch.objects.filter(
             title__icontains=searched_gift
-        ).order_by('-created_at')[:4]
+        ).order_by('-created_at')[:3]
 
         return context
