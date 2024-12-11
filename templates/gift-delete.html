@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Gift Delete</h1>
+    <h2>Delete Gift</h2>
+    <h4 style="margin: 1em">Are you sure you want to delete your gift
+        <a href="{% url 'gift-details' gift.pk %}">{{ gift.title }}</a>?
+    </h4>
+
+    <form method="post">
+        {% csrf_token %}
+        <button style="margin: 0 auto" type="submit" class="profile-button">Yes</button>
+    </form>
 {% endblock %}
