@@ -72,7 +72,7 @@
                         <a href="{% url 'gift-details' gift.pk %}" class="post-card">
                             <h2>{{ gift.title }}</h2>
                             <img src="{{ gift.image }}">
-                            <p>Description: {{ gift.description }}</p>
+                            <p>Description: {{ gift.description|truncatechars:50 }}</p>
                             <p>Price: {{ gift.price }}</p>
                         </a>
                     {% endfor %}
