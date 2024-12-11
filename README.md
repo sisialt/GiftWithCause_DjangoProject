@@ -41,21 +41,7 @@ Run the server
 
 To run this project, you will need to add the following environment variables to your .env file. I committed the .env file with the sensitive information, in order to be easier for the trainer jury.
 
-`SECRET_KEY`
-
-`DEBUG`
-
-`ALLOWED_HOSTS`
-
-`DB_NAME`
-
-`DB_USER`
-
-`DB_PASSWORD`
-
-`DB_HOST`
-
-`DB_PORT`
+`SECRET_KEY` `DEBUG` `ALLOWED_HOSTS` `DB_NAME` `DB_USER` `DB_PASSWORD` `DB_HOST` `DB_PORT`
 
 
 ## Running Tests
