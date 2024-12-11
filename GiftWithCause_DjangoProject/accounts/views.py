@@ -17,6 +17,11 @@ class AppUserLoginView(LoginView):
     template_name = 'login.html'
     authentication_form = CustomAuthenticationForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('profile-details', pk=request.user.pk)
+        return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
         return reverse_lazy('profile-details', kwargs={'pk': self.request.user.pk})
 
@@ -25,6 +30,11 @@ class AppUserRegisterView(CreateView):
     model = UserModel
     form_class = AppUserCreationForm
     template_name = 'register.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('profile-details', pk=request.user.pk)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse_lazy('profile-edit', kwargs={'pk': self.object.profile.pk})
@@ -43,7 +53,7 @@ class AppUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('login')
 
     def test_func(self):
-        return self.request.user.pk == self.kwargs['pk']
+        return self.request.user.pk == self.kwargs['pk'] or self.request.user.is_superuser
 
     def delete(self, request, *args, **kwargs):
         user = self.get_object()  # Get the user object
@@ -76,7 +86,7 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
-        return self.request.user == profile.user
+        return self.request.user == profile.user or self.request.user.is_superuser
 
     def get_success_url(self):
         return reverse_lazy('profile-details', kwargs={'pk': self.object.pk})
