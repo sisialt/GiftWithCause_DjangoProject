@@ -1,31 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
+
     {% if not request.user.is_authenticated %}
+
         <h3>You must log in first in order to create new gift search.</h3>
         <a href="{% url 'login' %}">Go to Login  <i class="fa-solid fa-right-to-bracket"></i></a>
+
     {% else %}
-        <h1>Create a Gift Search</h1>
 
-        <form method="post">
-            {% csrf_token %}
-            <p>{{ form.title.label }} {{ form.title }}</p>
-            <p>{{ form.title.errors }} </p>
+        <h2>Create a Gift Search</h2>
 
-            <p>{{ form.image.label }} {{ form.image }}</p>
+        <div class="form-container">
+            <form class="login-form" method="post" novalidate>
+                {% csrf_token %}
 
-            <p>{{ form.up_to_price.label }} {{ form.up_to_price }}</p>
+                <p>{{ form.title.label }}</p>
+                <p>{{ form.title }}</p>
+                <p>{{ form.title.errors }} </p>
 
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <li class="{{ message.tags }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+                <p>{{ form.image.label }}</p>
+                <p>{{ form.image }}</p>
 
-            <div style="display: inline-block">
-                <button class="profile-button" type="submit">Create gift search</button>
-            </div>
-        </form>
+                <p>{{ form.up_to_price.label }}</p>
+                <p>{{ form.up_to_price }}</p>
+
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <div style="display: inline-block">
+                    <button class="profile-button" type="submit">Create gift search</button>
+                </div>
+            </form>
+        </div>
     {% endif %}
 {% endblock %}

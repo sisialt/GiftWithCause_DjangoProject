@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+
 from GiftWithCause_DjangoProject.gifts.models import Gift
 
 
@@ -28,6 +30,18 @@ class GiftBaseForm(forms.ModelForm):
                 'required': 'Price field is required!'
             },
         }
+
+    def clean_title(self):
+        title = self.cleaned_data.get("title")
+        if len(title) < 3:
+            raise ValidationError("Title must be at least 3 characters long.")
+        return title
+
+    def clean_description(self):
+        description = self.cleaned_data.get("description")
+        if len(description) < 30:
+            raise ValidationError("Description must be at least 30 characters long.")
+        return description
 
 
 class GiftCreateForm(GiftBaseForm):
