@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Gifts</h1>
+    <h2>Gifts</h2>
 
     {% if request.user.is_creator %}
-        <a class="profile-button add-gift" href="{% url 'gift-create' %}">Create new gift offer</a>
+        <a class="profile-button add-gift-button" href="{% url 'gift-create' %}">Create new gift offer</a>
     {% endif %}
 
-    <div class="posts-container">
+    <div class="posts-container posts-container-center">
         {% for gift in all_gifts %}
             <a href="{% url 'gift-details' gift.pk %}" class="post-card">
                 <h2>{{ gift.title }}</h2>
                 <img src="{{ gift.image }}" width="60px" height="60px">
                 <p>Description {{ gift.description }}</p>
                 <p>Price {{ gift.price }}</p>
-                <p style="font-style: italic; color: darkgrey ">Created from: {{ gift.creator.user.profile.get_full_name }}</p>
-                <p style="font-style: italic; color: darkgrey ">Posted on: {{ gift.created_at }}</p>
+                <p class="smaller-gray-text">Created from: {{ gift.creator.user.profile.get_full_name }}</p>
+                <p class="smaller-gray-text">Posted on: {{ gift.created_at }}</p>
             </a>
         {% endfor %}
     </div>

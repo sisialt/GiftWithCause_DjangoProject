@@ -1,61 +1,83 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Gift Details</h1>
+    <div class="details-container">
+        <h2 class="align-left">Gift Details</h2>
 
-    {% if request.user.is_authenticated %}
-        {% if not favourite %}
-            <a href="{% url 'gift-favourite' gift.pk %}"><i class="fa-regular fa-heart"></i> Add to favourites</a>
-        {% else %}
-            <a href="{% url 'gift-favourite-delete' gift.pk %}"><i class="fa-solid fa-heart"></i> Remove from favourites</a>
-        {% endif %}
-    {% endif %}
+        <div class="details-inner-container">
+            <div class="details-image-container">
+                <img class="details-image" src="{{ gift.image }}">
+            </div>
 
-    <h2>Title: {{ gift.title }}</h2>
-    <img src="{{ gift.image }}" width="60px" height="60px">
-    <h3>Creator: <a href="{% url 'profile-details' gift.creator.user.id %}">{{ gift.creator.user.email }}</a></h3>
-    <p>Description: {{ gift.description }}</p>
-    <p>Price: {{ gift.price }}</p>
-    <p style="font-style: italic; color: darkgrey ">Posted on: {{ gift.created_at }}</p>
+            <div class="details-info-container">
+                {% if request.user.is_authenticated %}
+                    {% if not favourite %}
+                        <a href="{% url 'gift-favourite' gift.pk %}"><i class="fa-regular fa-heart"></i> Add to favourites</a>
+                    {% else %}
+                        <a href="{% url 'gift-favourite-delete' gift.pk %}"><i class="fa-solid fa-heart"></i> Remove from favourites</a>
+                    {% endif %}
+                {% endif %}
 
-    <h2>Comments:</h2>
+                <p><strong>Title:</strong> {{ gift.title }}</p>
+                <p><strong>Description:</strong> {{ gift.description }} </p>
+                {#                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque, eaque eligendi eveniet exercitationem explicabo fugiat id incidunt ipsum iste minus nihil placeat repellat. A deserunt eligendi libero maiores quas?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur culpa, deleniti dignissimos dolores ducimus est facere laboriosam minima officiis quae, recusandae repellendus, sed sequi similique Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam architecto asperiores cumque dolor ducimus esse Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci architecto doloribus eos expedita, inventore natus quas quos, ratione rem reprehenderit, similique suscipit! Cumque eaque esse id, numquam provident quasi <sint class="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, at culpa cumque dolores et, facilis harum iste itaque iusto nobis, numquam quibusdam repellat repellendus sequi sit sunt tenetur ut voluptatum.</sint>illum laborum nostrum obcaecati optio ratione recusandae rem unde, veritatis vitae voluptatibus! Culpa, dolores?suscipit temporibus vel veniam <voluptas class="lorem">lorem</voluptas></p>#}
 
-    {% if comments %}
-        {% for comment in comments %}
-            <div>
-                <p style="display: inline-block"><a
-                        href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.email }}</a>: {{ comment }}
-                </p>
+                <p><strong>Price:</strong> {{ gift.price }}</p>
+                <p><strong>Creator:</strong> <a href="{% url 'profile-details' gift.creator.user.id %}">{{ gift.creator.user.email }}</a></p>
+                <p class="smaller-gray-text">Posted on: {{ gift.created_at }}</p>
 
-                {% if request.user == comment.author %}
-                    <form style="display: inline-block" method="post"
-                          action="{% url 'gift-comment-delete' gift.pk comment.pk %}">
-                        {% csrf_token %}
-                        <button><i class="fa-solid fa-trash"></i> Delete comment</button>
-                    </form>
+                {% if request.user == gift.creator.user %}
+                    <a style="margin: 0; width: 20%" class="profile-button add-gift" href="{% url 'gift-edit' gift.pk %}">
+                        <i class="fa-regular fa-pen-to-square"></i> Edit gift
+                    </a>
+                    <a style="margin: 0; width: 20%" class="profile-button add-gift" href="{% url 'gift-delete' gift.pk %}">
+                        <i class="fa-solid fa-trash-can"></i> Delete gift
+                    </a>
                 {% endif %}
             </div>
-        {% endfor %}
-    {% else %}
-        <p>There are no comments for this post yet.</p>
-    {% endif %}
+        </div>
 
-    {% if not request.user.is_authenticated %}
-        <p style="font-style: italic">You must log in first in order to comment posts</p>
-        <a href="{% url 'login' %}">Go to Login <i class="fa-solid fa-right-to-bracket"></i></a>
-    {% else %}
-        <form method="post" action="{% url 'gift-comment' gift.pk 0 %}">
-            {% csrf_token %}
-            {{ comment_form.text }}
-            <button>Add comment</button>
-        </form>
-    {% endif %}
 
-    {% if request.user == gift.creator.user %}
-        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
-           href="{% url 'gift-edit' gift.pk %}">
-            <i class="fa-regular fa-pen-to-square"></i> Edit</a>
-        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
-           href="{% url 'gift-delete' gift.pk %}">
-            <i class="fa-solid fa-trash-can"></i> Delete</a>
-    {% endif %}
+
+        <h2 class="align-left">Comments:</h2>
+
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="align-left">
+                    <p  style="display: inline-block"><a
+                            href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.email }}</a>: {{ comment }}
+                    </p>
+
+                    {% if request.user == comment.author %}
+                        <form style="display: inline-block" method="post"
+                              action="{% url 'gift-comment-delete' gift.pk comment.pk %}">
+                            {% csrf_token %}
+                            <button><i class="fa-solid fa-trash"></i> Delete comment</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="align-left">There are no comments for this post yet.</p>
+        {% endif %}
+
+        <div class="align-left">
+            {% if not request.user.is_authenticated %}
+                <h5 style="font-style: italic">
+                    You must log in first in order to comment or like posts.
+                    <a href="{% url 'login' %}">Go to Login <i class="fa-solid fa-right-to-bracket"></i></a>
+                </h5>
+
+            {% else %}
+                <form method="post" action="{% url 'gift-comment' gift.pk 0 %}">
+                    {% csrf_token %}
+                    {{ comment_form.text }}
+                    <button>Add comment</button>
+                </form>
+            {% endif %}
+        </div>
+
+
+
+
+    </div>
 {% endblock %}

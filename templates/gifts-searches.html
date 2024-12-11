@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Gift Searches</h1>
+    <h2>Gift Searches</h1>
 
-    <a class="profile-button add-gift" href="{% url 'gift-search-create' %}">Create new gift search</a>
+    <a class="profile-button add-gift-button" href="{% url 'gift-search-create' %}">Create new gift search</a>
 
-    <div class="posts-container">
+    <div class="posts-container posts-container-center">
         {% for gift in all_gifts %}
             <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
                 <p>{{ gift.user.profile.get_full_name }} is searching for: </p>
@@ -15,7 +15,7 @@
                 {% endif %}
 
                 <p>Up to price: {{ gift.up_to_price }}</p>
-                <p style="font-style: italic; color: darkgrey">Posted at: {{ gift.created_at }}</p>
+                <p class="smaller-gray-text">Posted at: {{ gift.created_at }}</p>
             </a>
         {% endfor %}
     </div>

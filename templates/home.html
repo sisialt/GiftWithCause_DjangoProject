@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Here you can find a perfect gift,<br>made from a parent of a child with disabilities.</h2>
-    <h2>Thank you for your support!</h2>
+    <h3>Here you can find a perfect gift,<br>made from a parent of a child with disabilities.</h3>
+    <h3>Thank you for your support!</h3>
 
     <form method="get" class="search-container">
         {{ search_form }}
@@ -10,18 +10,20 @@
         </button>
     </form>
 
-    <h1 style="text-align: left">Latest Gift Offers</h1>
-    <div class="posts-container">
+    <h2 class="align-left">Latest Gift Offers</h2>
+    <div class="posts-container left">
 
         {% if gift_offers %}
             {% for gift in gift_offers %}
                 <a href="{% url 'gift-details' gift.pk %}" class="post-card">
                     <h2>{{ gift.title }}</h2>
-                    <img src="{{ gift.image }}" width="60px" height="60px">
+                    <div class="image-container">
+                        <img src="{{ gift.image }}">
+                    </div>
                     <p>Description: {{ gift.description }}</p>
                     <p>Price: {{ gift.price }}</p>
-                    <p style="font-style: italic; color: darkgrey ">Created from: {{ gift.creator.user.profile.get_full_name }}</p>
-                    <p style="font-style: italic; color: darkgrey ">Posted on: {{ gift.created_at }}</p>
+                    <p class="smaller-gray-text">Created from: {{ gift.creator.user.profile.get_full_name }}</p>
+                    <p class="smaller-gray-text">Posted on: {{ gift.created_at }}</p>
                 </a>
             {% endfor %}
         {% else %}
@@ -29,18 +31,20 @@
         {% endif %}
     </div>
 
-    <h1 style="text-align: left">Latest Gift Searches<br/></h1>
-    <div class="posts-container">
+    <h2 class="align-left">Latest Gift Searches<br/></h2>
+    <div class="posts-container left">
         {% if gift_searches %}
             {% for gift in gift_searches %}
                 <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
                     <p>{{ gift.user.profile.get_full_name }} is searching for</p>
                     <h2>{{ gift.title }}</h2>
                     {% if gift.image %}
-                        <img src="{{ gift.image }}" width="60px" height="60px">
+                        <div class="image-container">
+                            <img src="{{ gift.image }}">
+                        </div>
                     {% endif %}
                     <p>Up To Price: {{ gift.up_to_price }}</p>
-                    <p style="font-style: italic; color: darkgrey">Posted at: {{ gift.created_at }}</p>
+                    <p class="smaller-gray-text">Posted at: {{ gift.created_at }}</p>
                 </a>
             {% endfor %}
         {% else %}

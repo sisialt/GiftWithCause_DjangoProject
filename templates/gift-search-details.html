@@ -1,55 +1,72 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Gift Search Details</h1>
-    <h2>Title: {{ giftsearch.title }}</h2>
+    <div class="details-container">
+        <h2 class="align-left">Gift Search Details</h2>
 
-    {% if giftsearch.image %}
-        <img src="{{ giftsearch.image }}" width="60px" height="60px">
-    {% endif %}
+        <div class="details-inner-container">
+            {% if giftsearch.image %}
+                <div class="details-image-container">
+                    <img class="details-image" src="{{ giftsearch.image }}">
+                </div>
+            {% endif %}
 
-    <h3>Creator: <a href="{% url 'profile-details' giftsearch.user_id %}">{{ giftsearch.user.email }}</a></h3>
-    <p>Up to price: {{ giftsearch.up_to_price }}</p>
-    <p style="font-style: italic; color: darkgrey ">Posted on: {{ giftsearch.created_at }}</p>
-
-    <h2>Comments:</h2>
-
-    {% if comments %}
-        {% for comment in comments %}
-            <div>
-                <p style="display: inline-block"><a
-                        href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.email }}</a>: {{ comment }}
-                </p>
-
-                {% if request.user == comment.author %}
-                    <form style="display: inline-block" method="post"
-                          action="{% url 'gift-search-comment-delete' giftsearch.pk comment.pk %}">
-                        {% csrf_token %}
-                        <button><i class="fa-solid fa-trash"></i> Delete comment</button>
-                    </form>
-                {% endif %}
+            <div class="details-info-container">
+                <p><strong>Title:</strong> {{ giftsearch.title }}</p>
+                <p><strong>Up to price:</strong> {{ giftsearch.up_to_price }}</p>
+                <p><strong>Creator:</strong> <a href="{% url 'profile-details' giftsearch.user_id %}">{{ giftsearch.user.email }}</a></p>
+                <p class="smaller-gray-text">Posted on: {{ giftsearch.created_at }}</p>
             </div>
-        {% endfor %}
-    {% else %}
-        <p>There are no comments for this post yet.</p>
-    {% endif %}
+        </div>
 
-    {% if not request.user.is_authenticated %}
-        <p style="font-style: italic">You must log in first in order to comment posts</p>
-        <a href="{% url 'login' %}">Go to Login <i class="fa-solid fa-right-to-bracket"></i></a>
-    {% else %}
-        <form method="post" action="{% url 'gift-search-comment' giftsearch.pk 1 %}">
-            {% csrf_token %}
-            {{ comment_form.text }}
-            <button>Add comment</button>
-        </form>
-    {% endif %}
 
-    {% if request.user == giftsearch.user %}
-        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
-           href="{% url 'gift-search-edit' giftsearch.pk %}"><i
-                class="fa-regular fa-pen-to-square"></i> Edit</a>
-        <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
-           href="{% url 'gift-search-delete' giftsearch.pk %}"><i
-                class="fa-solid fa-trash-can"></i> Delete</a>
-    {% endif %}
+
+        <h2 class="align-left">Comments:</h2>
+
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="align-left">
+                    <p style="display: inline-block"><a
+                            href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.email }}</a>: {{ comment }}
+                    </p>
+
+                    {% if request.user == comment.author %}
+                        <form style="display: inline-block" method="post"
+                              action="{% url 'gift-search-comment-delete' giftsearch.pk comment.pk %}">
+                            {% csrf_token %}
+                            <button><i class="fa-solid fa-trash"></i> Delete comment</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="align-left">There are no comments for this post yet.</p>
+        {% endif %}
+
+        <div class="align-left">
+            {% if not request.user.is_authenticated %}
+                <h5 style="font-style: italic">
+                    You must log in first in order to comment posts.
+                    <a href="{% url 'login' %}">Go to Login <i class="fa-solid fa-right-to-bracket"></i></a>
+                </h5>
+
+            {% else %}
+                <form method="post" action="{% url 'gift-search-comment' giftsearch.pk 1 %}">
+                    {% csrf_token %}
+                    {{ comment_form.text }}
+                    <button>Add comment</button>
+                </form>
+            {% endif %}
+        </div>
+
+
+
+        {% if request.user == giftsearch.user %}
+            <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
+               href="{% url 'gift-search-edit' giftsearch.pk %}"><i
+                    class="fa-regular fa-pen-to-square"></i> Edit gift search</a>
+            <a style="margin: 0 auto; display: inline-block" class="profile-button add-gift"
+               href="{% url 'gift-search-delete' giftsearch.pk %}"><i
+                    class="fa-solid fa-trash-can"></i> Delete gift search</a>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -1,110 +1,134 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <h1 style="text-align: left">Profile Details</h1>
+    <div class="details-container">
+        <h2 class="align-left">Profile Details</h2>
 
-    <div class="info-container">
+        <div class="details-inner-container">
 
-        <div class="image-container">
-            {% if user.profile.profile_picture %}
-                <img src="{{ user.profile.profile_picture }}" width="200px" height="200px">
-            {% else %}
-                <img src="{% static 'images/no-profile-image.jpg' %}" width="200px" height="200px">
+            <div class="details-image-container">
+                {% if user.profile.profile_picture %}
+                    <img class="details-image" src="{{ user.profile.profile_picture }}">
+                {% else %}
+                    <img class="details-image" src="{% static 'images/no-profile-image.jpg' %}">
+                {% endif %}
+            </div>
+
+            <div class="details-info-container">
+                {% if user.is_creator %}
+                    <h5><i>Status:</i> <span style="font-weight: normal;">Hero</span></h5>
+                {% endif %}
+                <h6><i>Full Name:</i> <span style="font-weight: normal;">{{ user.profile.get_full_name }}</span></h6>
+                <h6><i>More Information: </i><span style="font-weight: normal;">{{ user.profile.get_bio }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, facere, possimus. A aliquid aspernatur blanditiis cumque ducimus et exercitationem explicabo id ipsum modi nemo quas, sed velit. Necessitatibus, obcaecati optio?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae consectetur ipsam iure neque repudiandae, sint? Consequatur hic impedit ipsam mollitia optio quas veniam voluptatem! Architecto consequatur consequuntur tempore voluptatem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dignissimos, est explicabo facere illum incidunt magnam mollitia nesciunt nisi nostrum odio pariatur possimus provident quasi reprehenderit, sed sint tenetur <voluptates class="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur enim eum, facere fugiat illo incidunt, modi molestias porro quae quas quidem recusandae reiciendis similique sint sunt suscipit ullam voluptatibus!</voluptates></span></h6>
+            </div>
+
+            {% if request.user == user %}
+
+                <div class="buttons-container">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="profile-button logout-button" type="submit"><i
+                                class="fa-solid fa-right-from-bracket"></i> Logout
+                        </button>
+                    </form>
+                    <a class="profile-button" href="{% url 'profile-edit' request.user.pk %}"><i
+                            class="fa-regular fa-pen-to-square"></i> Edit Profile</a>
+                    <a class="profile-button" href="{% url 'profile-delete' request.user.pk %}"><i
+                            class="fa-solid fa-trash-can"></i> Delete User</a>
+                </div>
             {% endif %}
+
         </div>
 
-        <div class="more-info-container">
-            <h3>Full Name: {{ user.profile.get_full_name }}</h3>
-            <h3>Is creator:<br>{{ user.is_creator }}</h3>
-            <h3>More Information:<br>{{ user.profile.get_bio }}</h3>
-        </div>
+        <h2 class="align-left">Published Searches</h2>
+        {% if user.gift_searches.all.count > 0 %}
+            <ul class="posts-container">
+                {% for gift in user.gift_searches.all %}
+                    <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
+                        <h2>Title: {{ gift.title }}</h2>
+                        {% if gift.image %}
+                            <img src="{{ gift.image }}" width="60px" height="60px">
+                        {% endif %}
+                        <p>Price: {{ gift.up_to_price }}</p>
+                    </a>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="align-left">There are no published searches yet.</p>
+        {% endif %}
+
+        {% if user.is_creator %}
+            <h2 class="align-left">Published Gifts</h2>
+
+            {% if user.gift_creator.gifts.count > 0 %}
+                <ul class="posts-container">
+                    {% for gift in user.gift_creator.gifts.all|slice:":3" %}
+                        <a href="{% url 'gift-details' gift.pk %}" class="post-card">
+                            <h2>Title: {{ gift.title }}</h2>
+                            <img src="{{ gift.image }}" width="60px" height="60px">
+                            <p>Description: {{ gift.description }}</p>
+                            <p>Price: {{ gift.price }}</p>
+                        </a>
+                    {% endfor %}
+                    {% if user.gift_creator.gifts.count > 3 %}
+                        <a href="{% url 'published-gifts' user.pk %}">Load more gifts...</a>
+                    {% endif %}
+                </ul>
+            {% else %}
+                <p class="align-left">There are no published gifts yet.</p>
+            {% endif %}
+        {% endif %}
+
+        <h2 class="align-left">Published Comments</h2>
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="posts-container posts-container-column comment-border">
+                    <p>"{{ comment }}"</p>
+
+                    {% if comment.to_gift_search %}
+                        <a href="{% url 'gift-search-details' comment.to_gift_search.pk %}">{{ comment.to_gift_search.title }}</a>
+
+                        {% if request.user.is_authenticated and request.user == user %}
+                            <form style="display: inline-block" method="post" action="{% url 'gift-comment-delete' comment.to_gift_search.pk comment.pk %}">
+                                {% csrf_token %}
+                                <button><i class="fa-solid fa-trash"></i> Delete comment</button>
+                            </form>
+                        {% endif %}
+
+                    {% else %}
+                        <a href="{% url 'gift-details' comment.to_gift.pk %}">{{ comment.to_gift.title }}</a>
+
+                        {% if request.user.is_authenticated and request.user == user %}
+                            <form style="display: inline-block" method="post" action="{% url 'gift-comment-delete' comment.to_gift.pk comment.pk %}">
+                                {% csrf_token %}
+                                <button><i class="fa-solid fa-trash"></i> Delete comment</button>
+                            </form>
+                        {% endif %}
+
+                    {% endif %}
+
+                    <p class="smaller-gray-text">Published on: {{ comment.created_at }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="align-left">There are no published comments yet.</p>
+        {% endif %}
 
         {% if request.user == user %}
+            <h2 class="align-left">Favourite Gifts</h2>
 
-            <div class="buttons-container">
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button class="profile-button logout-button" type="submit"><i
-                            class="fa-solid fa-right-from-bracket"></i> Logout
-                    </button>
-                </form>
-                <a class="profile-button" href="{% url 'profile-edit' request.user.pk %}"><i
-                        class="fa-regular fa-pen-to-square"></i> Edit</a>
-                <a class="profile-button" href="{% url 'profile-delete' request.user.pk %}"><i
-                        class="fa-solid fa-trash-can"></i> Delete</a>
-            </div>
+            {% if not favourites %}
+                <p class="align-left">There are no favourite gifts yet.</p>
+            {% else %}
+                <ul class="posts-container">
+                    {% for favourite in favourites %}
+                        <a href="{% url 'gift-details' favourite.to_gift.pk %}" class="post-card">
+                            <h4>{{ favourite.to_gift.title }}</h4>
+                        </a>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
         {% endif %}
-
     </div>
-
-    <h1 style="text-align: left">Published Searches</h1>
-    {% if user.gift_searches.all.count > 0 %}
-        <ul class="posts-container">
-            {% for gift in user.gift_searches.all %}
-                <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
-                    <h2>Title: {{ gift.title }}</h2>
-                    {% if gift.image %}
-                        <img src="{{ gift.image }}" width="60px" height="60px">
-                    {% endif %}
-                    <p>Price: {{ gift.up_to_price }}</p>
-                </a>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h3 style="text-align: left">There are no published searches yet.</h3>
-    {% endif %}
-
-    {% if user.is_creator %}
-        <h1 style="text-align: left">Published Gifts</h1>
-
-        {% if user.gift_creator.gifts.count > 0 %}
-            <ul class="posts-container">
-                {% for gift in user.gift_creator.gifts.all|slice:":3" %}
-                    <a href="{% url 'gift-details' gift.pk %}" class="post-card">
-                        <h2>Title: {{ gift.title }}</h2>
-                        <img src="{{ gift.image }}" width="60px" height="60px">
-                        <p>Description: {{ gift.description }}</p>
-                        <p>Price: {{ gift.price }}</p>
-                    </a>
-                {% endfor %}
-                {% if user.gift_creator.gifts.count > 3 %}
-                    <a href="{% url 'published-gifts' user.pk %}">Load more gifts...</a>
-                {% endif %}
-            </ul>
-        {% else %}
-            <h3 style="text-align: left">There are no published gifts yet.</h3>
-        {% endif %}
-    {% endif %}
-
-    <h1 style="text-align: left">Published Comments:</h1>
-    {% if comments %}
-        {% for comment in comments %}
-            <div>
-                <p>Published on: {{ comment.created_at }} about</p>
-                {% if comment.to_gift_search %}
-                    <a href="{% url 'gift-search-details' comment.to_gift_search.pk %}">{{ comment.to_gift_search.title }}</a>
-                {% else %}
-                    <a href="{% url 'gift-details' comment.to_gift.pk %}">{{ comment.to_gift.title }}</a>
-                {% endif %}
-                <p>{{ comment }}</p>
-            </div>
-        {% endfor %}
-    {% else %}
-        <h3 style="text-align: left">There are no published comments yet.</h3>
-    {% endif %}
-
-    {% if request.user == user %}
-        <h1 style="text-align: left">Favourite Gifts:</h1>
-        {% if not favourites %}
-            <h3 style="text-align: left">There are no favourite gifts yet.</h3>
-        {% else %}
-            <ul class="posts-container">
-                {% for favourite in favourites %}
-                    <a href="{% url 'gift-details' favourite.to_gift.pk %}" class="post-card">
-                        <h2>{{ favourite.to_gift.title }}</h2>
-                    </a>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endif %}
 {% endblock %}

@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>{{ profile.get_full_name }}`s published gifts</h1>
+    <h2>{{ profile.get_full_name }}`s published gifts</h2>
 
-    <div class="posts-container">
+    <div class="posts-container posts-container-center">
         {% for gift in published_gifts %}
             <a href="{% url 'gift-details' gift.pk %}" class="post-card">
                 <h2>{{ gift.title }}</h2>

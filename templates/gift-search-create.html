@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if not request.user.is_authenticated %}
-        <h1>You must log in first in order to search for a gift.</h1>
+        <h3>You must log in first in order to create new gift search.</h3>
         <a href="{% url 'login' %}">Go to Login  <i class="fa-solid fa-right-to-bracket"></i></a>
     {% else %}
         <h1>Create a Gift Search</h1>

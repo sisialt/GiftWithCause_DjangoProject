@@ -1,25 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
     <div>
-        <h1>You can register here</h1>
-        <div class="form-container">
-            <form method="post">
+        <h2>You can register here</h2>
+        <div class="form-container form-container-with-gap">
+            <form class="login-form" method="post">
                 {% csrf_token %}
                 {#            {{ form.as_p }}#}
-                <p>{{ form.email.label }}: {{ form.email }}</p>
+                <p>{{ form.email.label }}:</p>
+                <p>{{ form.email }}</p>
                 <p>{{ form.email.errors }} </p>
 
-                <p>{{ form.password1.label }}: {{ form.password1 }}</p>
+                <p>{{ form.password1.label }}:</p>
+                <p>{{ form.password1 }}</p>
                 <p>{{ form.password1.errors }}</p>
 
-                <p>{{ form.password2.label }}: {{ form.password2 }}</p>
+                <p>{{ form.password2.label }}:</p>
+                <p>{{ form.password2 }}</p>
                 <p>{{ form.password2.errors }}</p>
 
                 <p>{{ form.is_creator.label }}: {{ form.is_creator }}</p>
                 <p>{{ form.is_creator.errors }}</p>
 
                 <div style="display: inline-block">
-                    <button class="profile-button" type="submit">Register</button>
+                    <button class="profile-button login-button" type="submit">Register</button>
                 </div>
             </form>
         </div>

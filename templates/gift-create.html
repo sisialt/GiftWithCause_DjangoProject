@@ -4,7 +4,7 @@
 
     <form method="post">
         {% csrf_token %}
-        {#            {{ form.as_p }}#}
+
         <p>{{ form.title.label }} {{ form.title }}</p>
         <p>{{ form.title.errors }} </p>
 
@@ -18,7 +18,7 @@
         <p>{{ form.price.errors }}</p>
 
         {% if messages %}
-            <ul class="messages">
+            <ul>
                 {% for message in messages %}
                     <li class="{{ message.tags }}">{{ message }}</li>
                 {% endfor %}

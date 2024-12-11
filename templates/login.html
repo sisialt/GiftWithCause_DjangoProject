@@ -1,16 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-        <h1>You can sign in here</h1>
-        <div class="form-container">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
+    <h2>You can sign in here</h2>
+    <div class="form-container form-container-with-gap">
+        <form class="login-form" method="post">
+            {% csrf_token %}
 
-                <div style="display: inline-block">
-                    <button class="profile-button" type="submit">Log in</button>
-                </div>
-            </form>
-        </div>
+            {% if form.non_field_errors %}
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <p>{{ form.username.label }}</p>
+            <p>{{ form.username }}</p>
+            {% if form.username.errors %}
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <p>{{ form.password.label }}</p>
+            {% if form.password.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <p>{{ form.password }}</p>
+
+            <div style="display: inline-block">
+                <button class="profile-button login-button" type="submit">Log in</button>
+            </div>
+        </form>
+    </div>
     <div>
         <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
     </div>

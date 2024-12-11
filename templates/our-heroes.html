@@ -5,7 +5,7 @@
     {% if not all_creators %}
         <h3>There are no registered heroes yet.</h3>
     {% else %}
-        <div class="posts-container">
+        <div class="posts-container posts-container-center">
             {% for creator in all_creators %}
                 <a href="{% url 'profile-details' creator.user.profile.pk %}" class="post-card">
                     <h2>{{ creator.user.profile.get_full_name }}</h2>
