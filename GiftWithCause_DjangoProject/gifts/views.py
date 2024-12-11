@@ -17,7 +17,7 @@ class GiftOffersView(ListView):
     model = Gift
     template_name = 'gifts.html'
     context_object_name = 'all_gifts'
-    paginate_by = 8
+    paginate_by = 12
 
     def get_queryset(self):
         gifts = Gift.objects.order_by('-created_at', 'title')
@@ -71,9 +71,11 @@ class GiftDetailView(DetailView):
 
         context['comment_form'] = CommentCreateForm(self.request.GET)
         context['comments'] = Comment.objects.filter(to_gift=self.object)
-        context['favourite'] = Favourite.objects.filter(
-            to_gift=self.object, user=self.request.user
-        ).first()
+
+        if self.request.user.is_authenticated:
+            context['favourite'] = Favourite.objects.filter(
+                to_gift=self.object, user=self.request.user
+            ).first()
 
         return context
 
