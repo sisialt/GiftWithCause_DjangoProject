@@ -116,3 +116,14 @@ img {
     max-width: 30%;
 }
 
+.about-text {
+    margin: 2em auto;
+    max-width: 70%;
+}
+
+.about-image {
+    display: inline-block;
+    max-width: 500px;
+}
+
+

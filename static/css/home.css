@@ -26,6 +26,14 @@
     color: black;
 }
 
+.posts-container.home {
+    justify-content: space-between;
+}
+
+.posts-container.home .post-card {
+    width: 25%;
+}
+
 .align-left {
     text-align: left;
 }

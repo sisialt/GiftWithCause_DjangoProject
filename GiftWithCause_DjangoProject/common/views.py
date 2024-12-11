@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.shortcuts import render
 from django.views.generic import ListView
 
 from GiftWithCause_DjangoProject.common.forms import SearchForm
@@ -27,3 +28,7 @@ class HomeView(ListView):
         ).order_by('-created_at')[:3]
 
         return context
+
+
+def about_view(request):
+    return render(request, 'about.html')
