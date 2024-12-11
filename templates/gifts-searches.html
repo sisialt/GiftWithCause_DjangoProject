@@ -14,7 +14,10 @@
                     <img src="{{ gift.image }}" width="60px" height="60px">
                 {% endif %}
 
-                <p>Up to price: {{ gift.up_to_price }}</p>
+                {% if gift.up_to_price %}
+                    <p>Up to price: {{ gift.up_to_price }}</p>
+                {% endif %}
+
                 <p class="smaller-gray-text">Posted at: {{ gift.created_at }}</p>
             </a>
         {% endfor %}

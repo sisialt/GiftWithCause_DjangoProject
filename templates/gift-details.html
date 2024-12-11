@@ -19,10 +19,8 @@
 
                 <p><strong>Title:</strong> {{ gift.title }}</p>
                 <p><strong>Description:</strong> {{ gift.description }} </p>
-                {#                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores atque, eaque eligendi eveniet exercitationem explicabo fugiat id incidunt ipsum iste minus nihil placeat repellat. A deserunt eligendi libero maiores quas?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur culpa, deleniti dignissimos dolores ducimus est facere laboriosam minima officiis quae, recusandae repellendus, sed sequi similique Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam architecto asperiores cumque dolor ducimus esse Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci architecto doloribus eos expedita, inventore natus quas quos, ratione rem reprehenderit, similique suscipit! Cumque eaque esse id, numquam provident quasi <sint class="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, at culpa cumque dolores et, facilis harum iste itaque iusto nobis, numquam quibusdam repellat repellendus sequi sit sunt tenetur ut voluptatum.</sint>illum laborum nostrum obcaecati optio ratione recusandae rem unde, veritatis vitae voluptatibus! Culpa, dolores?suscipit temporibus vel veniam <voluptas class="lorem">lorem</voluptas></p>#}
-
                 <p><strong>Price:</strong> {{ gift.price }}</p>
-                <p><strong>Creator:</strong> <a href="{% url 'profile-details' gift.creator.user.id %}">{{ gift.creator.user.email }}</a></p>
+                <p><strong>Creator:</strong> <a href="{% url 'profile-details' gift.creator.user.id %}">{{ gift.creator.user.profile.get_full_name }}</a></p>
                 <p class="smaller-gray-text">Posted on: {{ gift.created_at }}</p>
 
                 {% if request.user == gift.creator.user %}
@@ -44,7 +42,7 @@
             {% for comment in comments %}
                 <div class="align-left">
                     <p  style="display: inline-block"><a
-                            href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.email }}</a>: {{ comment }}
+                            href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.profile.get_full_name }}</a>: {{ comment }}
                     </p>
 
                     {% if request.user == comment.author %}

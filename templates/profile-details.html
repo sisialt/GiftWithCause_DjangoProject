@@ -17,9 +17,10 @@
             <div class="details-info-container">
                 {% if user.is_creator %}
                     <h5><i>Status:</i> <span style="font-weight: normal;">Hero</span></h5>
+                    <h6><i>Email:</i> <span style="font-weight: normal;">{{ user.email }}</span></h6>
                 {% endif %}
                 <h6><i>Full Name:</i> <span style="font-weight: normal;">{{ user.profile.get_full_name }}</span></h6>
-                <h6><i>More Information: </i><span style="font-weight: normal;">{{ user.profile.get_bio }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, facere, possimus. A aliquid aspernatur blanditiis cumque ducimus et exercitationem explicabo id ipsum modi nemo quas, sed velit. Necessitatibus, obcaecati optio?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam beatae consectetur ipsam iure neque repudiandae, sint? Consequatur hic impedit ipsam mollitia optio quas veniam voluptatem! Architecto consequatur consequuntur tempore voluptatem! Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dignissimos, est explicabo facere illum incidunt magnam mollitia nesciunt nisi nostrum odio pariatur possimus provident quasi reprehenderit, sed sint tenetur <voluptates class="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur enim eum, facere fugiat illo incidunt, modi molestias porro quae quas quidem recusandae reiciendis similique sint sunt suscipit ullam voluptatibus!</voluptates></span></h6>
+                <h6><i>More Information: </i><span style="font-weight: normal;">{{ user.profile.get_bio }}</span></h6>
             </div>
 
             {% if request.user == user %}
@@ -41,15 +42,20 @@
         </div>
 
         <h2 class="align-left">Published Searches</h2>
+
         {% if user.gift_searches.all.count > 0 %}
             <ul class="posts-container">
                 {% for gift in user.gift_searches.all %}
                     <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
-                        <h2>Title: {{ gift.title }}</h2>
+                        <h2>{{ gift.title }}</h2>
+
                         {% if gift.image %}
-                            <img src="{{ gift.image }}" width="60px" height="60px">
+                            <img src="{{ gift.image }}">
                         {% endif %}
-                        <p>Price: {{ gift.up_to_price }}</p>
+
+                        {% if gift.up_to_price %}
+                            <p>Up to price: {{ gift.up_to_price }}</p>
+                        {% endif %}
                     </a>
                 {% endfor %}
             </ul>
@@ -64,8 +70,8 @@
                 <ul class="posts-container">
                     {% for gift in user.gift_creator.gifts.all|slice:":3" %}
                         <a href="{% url 'gift-details' gift.pk %}" class="post-card">
-                            <h2>Title: {{ gift.title }}</h2>
-                            <img src="{{ gift.image }}" width="60px" height="60px">
+                            <h2>{{ gift.title }}</h2>
+                            <img src="{{ gift.image }}">
                             <p>Description: {{ gift.description }}</p>
                             <p>Price: {{ gift.price }}</p>
                         </a>
@@ -80,6 +86,7 @@
         {% endif %}
 
         <h2 class="align-left">Published Comments</h2>
+
         {% if comments %}
             {% for comment in comments %}
                 <div class="posts-container posts-container-column comment-border">

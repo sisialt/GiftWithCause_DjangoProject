@@ -40,7 +40,7 @@
             {% for comment in comments %}
                 <div class="align-left">
                     <p style="display: inline-block"><a
-                            href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.email }}</a>: {{ comment }}
+                            href="{% url 'profile-details' comment.author.pk %}">{{ comment.author.profile.get_full_name }}</a>: {{ comment }}
                     </p>
 
                     {% if request.user == comment.author %}

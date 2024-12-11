@@ -11,12 +11,13 @@
     </form>
 
     <h2 class="align-left">Latest Gift Offers</h2>
+
     <div class="posts-container left">
 
         {% if gift_offers %}
             {% for gift in gift_offers %}
                 <a href="{% url 'gift-details' gift.pk %}" class="post-card">
-                    <h2>{{ gift.title }}</h2>
+                    <h4>{{ gift.title }}</h4>
                     <div class="image-container">
                         <img src="{{ gift.image }}">
                     </div>
@@ -32,18 +33,25 @@
     </div>
 
     <h2 class="align-left">Latest Gift Searches<br/></h2>
+
     <div class="posts-container left">
         {% if gift_searches %}
             {% for gift in gift_searches %}
                 <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
+
                     <p>{{ gift.user.profile.get_full_name }} is searching for</p>
-                    <h2>{{ gift.title }}</h2>
+                    <h4>{{ gift.title }}</h4>
+
                     {% if gift.image %}
                         <div class="image-container">
                             <img src="{{ gift.image }}">
                         </div>
                     {% endif %}
-                    <p>Up To Price: {{ gift.up_to_price }}</p>
+
+                    {% if gift.up_to_price %}
+                        <p>Up To Price: {{ gift.up_to_price }}</p>
+                    {% endif %}
+
                     <p class="smaller-gray-text">Posted at: {{ gift.created_at }}</p>
                 </a>
             {% endfor %}
