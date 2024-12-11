@@ -1,4 +1,6 @@
-![logo-small](https://github.com/user-attachments/assets/0643d874-0b73-4b9b-bce0-108f4a99f410)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0643d874-0b73-4b9b-bce0-108f4a99f410" alt="logo-small" />
+</p>
 
 # GiftWithCause
 
