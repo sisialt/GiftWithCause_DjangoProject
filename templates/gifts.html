@@ -11,7 +11,7 @@
             <a href="{% url 'gift-details' gift.pk %}" class="post-card">
                 <h2>{{ gift.title }}</h2>
                 <img src="{{ gift.image }}" width="60px" height="60px">
-                <p>Description: {{ gift.description }}</p>
+                <p>Description: {{ gift.description|truncatechars:100 }}</p>
                 <p><strong>Price: {{ gift.price }} lv.</strong></p>
                 <p class="smaller-gray-text">Created from: {{ gift.creator.user.profile.get_full_name }}</p>
                 <p class="smaller-gray-text">Posted on: {{ gift.created_at }}</p>

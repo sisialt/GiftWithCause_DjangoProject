@@ -12,7 +12,7 @@
 
     <h2 class="align-left">Latest Gift Offers</h2>
 
-    <div class="posts-container left">
+    <div class="posts-container home">
 
         {% if gift_offers %}
             {% for gift in gift_offers %}
@@ -21,7 +21,7 @@
                     <div class="image-container">
                         <img src="{{ gift.image }}">
                     </div>
-                    <p>Description: {{ gift.description }}</p>
+                    <p>Description: {{ gift.description|truncatechars:30 }}</p>
                     <p>Price: {{ gift.price }}</p>
                     <p class="smaller-gray-text">Created from: {{ gift.creator.user.profile.get_full_name }}</p>
                     <p class="smaller-gray-text">Posted on: {{ gift.created_at }}</p>
@@ -34,7 +34,7 @@
 
     <h2 class="align-left">Latest Gift Searches<br/></h2>
 
-    <div class="posts-container left">
+    <div class="posts-container home">
         {% if gift_searches %}
             {% for gift in gift_searches %}
                 <a href="{% url 'gift-search-details' gift.pk %}" class="post-card">
