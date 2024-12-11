@@ -1,0 +1,9 @@
+@import './base.css';
+@import './login.css';
+@import './header.css';
+@import './footer.css';
+@import './buttons.css';
+@import './searchbar.css';
+@import './home.css';
+@import './pagination.css';
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');

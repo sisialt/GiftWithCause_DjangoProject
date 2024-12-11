@@ -1,0 +1,118 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font: 14px/1.5 Helvetica, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-color: #fff2ee;
+}
+
+h1 { font-size: 2.8em; }
+h2 { font-size: 2.2em; }
+h3 { font-size: 1.8em; }
+h4 { font-size: 1.6em; }
+h5 { font-size: 1.4em; }
+h6 { font-size: 1.2em; }
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.image-container {
+    margin: 0 auto;
+}
+
+.details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.details-image {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+}
+
+.details-inner-container {
+    display: flex;
+}
+
+.details-image-container {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+.details-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    text-align: left;
+    width: 40%;
+}
+
+.content {
+    padding: 10em 5em;
+    text-align: center;
+}
+
+
+
+
+.form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-edit-form {
+    display: flex;
+    gap: 0.5em;
+    flex-direction: column;
+    max-width: 30%;
+    align-items: center;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2em;
+}
+
+.more-info-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+}
+
+.errorlist {
+    color: darkred;
+    list-style-type: none;
+}
+
+.comment-border {
+    border: 1px solid #75767a42;
+    border-radius: 0.5em;
+    max-width: 30%;
+}
+
