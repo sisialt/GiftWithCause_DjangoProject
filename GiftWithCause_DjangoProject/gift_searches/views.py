@@ -62,7 +62,7 @@ class GiftSearchEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         gift = get_object_or_404(GiftSearch, pk=self.kwargs['pk'])
-        return self.request.user == gift.user
+        return self.request.user == gift.user or self.request.user.is_superuser
 
 
 class GiftSearchDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -73,7 +73,7 @@ class GiftSearchDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         gift = get_object_or_404(GiftSearch, pk=self.kwargs['pk'])
-        return self.request.user == gift.user
+        return self.request.user == gift.user or self.request.user.is_superuser
 
     def get_initial(self):
         return self.object.__dict__
