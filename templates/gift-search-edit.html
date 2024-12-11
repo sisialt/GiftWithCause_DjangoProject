@@ -1,29 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Gift Search Edit</h1>
+    <h2>Edit Gift Search</h2>
 
-    <form method="post">
-        {% csrf_token %}
+    <div class="form-container">
+        <form class="login-form" method="post" novalidate>
+            {% csrf_token %}
 
-        <p>{{ form.title.label }} {{ form.title }}</p>
-        <p>{{ form.title.errors }} </p>
+            <p>{{ form.title.label }}</p>
+            <p>{{ form.title }}</p>
+            <p>{{ form.title.errors }} </p>
 
-        <p>{{ form.image.label }} {{ form.image }}</p>
-        <p>{{ form.image.errors }}</p>
+            <p>{{ form.image.label }}</p>
+            <p>{{ form.image }}</p>
 
-        <p>{{ form.up_to_price.label }} {{ form.up_to_price }}</p>
-        <p>{{ form.up_to_price.errors }}</p>
+            <p>{{ form.up_to_price.label }}</p>
+            <p>{{ form.up_to_price }}</p>
+            <p>{{ form.up_to_price.errors }}</p>
 
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        <div style="display: inline-block">
-            <button class="profile-button" type="submit">Edit gift search</button>
-        </div>
-    </form>
+            <div style="display: inline-block">
+                <button class="profile-button" type="submit">Edit gift search</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

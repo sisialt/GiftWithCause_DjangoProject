@@ -1,32 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Gift Edit</h1>
+    <h2>Edit Gift</h2>
 
-    <form method="post">
-        {% csrf_token %}
+    <div class="form-container">
+        <form class="login-form" method="post" novalidate>
+            {% csrf_token %}
 
-        <p>{{ form.title.label }} {{ form.title }}</p>
-        <p>{{ form.title.errors }} </p>
+            <p>{{ form.title.label }}</p>
+            <p>{{ form.title }}</p>
+            <p>{{ form.title.errors }} </p>
 
-        <p>{{ form.image.label }} {{ form.image }}</p>
-        <p>{{ form.image.errors }}</p>
+            <p>{{ form.image.label }}</p>
+            <p>{{ form.image }}</p>
+            <p>{{ form.image.errors }}</p>
 
-        <p>{{ form.description.label }} {{ form.description }}</p>
-        <p>{{ form.description.errors }}</p>
+            <p>{{ form.description.label }}</p>
+            <p>{{ form.description }}</p>
+            <p>{{ form.description.errors }}</p>
 
-        <p>{{ form.price.label }} {{ form.price }}</p>
-        <p>{{ form.price.errors }}</p>
+            <p>{{ form.price.label }}</p>
+            <p>{{ form.price }}</p>
+            <p>{{ form.price.errors }}</p>
 
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        <div style="display: inline-block">
-            <button class="profile-button" type="submit">Edit gift offer</button>
-        </div>
-    </form>
+            <div style="display: inline-block">
+                <button class="profile-button" type="submit">Edit gift</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}
