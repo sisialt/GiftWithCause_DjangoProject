@@ -5,8 +5,21 @@
         <a href="{% url 'gift-search-details' giftsearch.pk %}">{{ giftsearch.title }}</a>?
     </h4>
 
-    <form method="post">
-        {% csrf_token %}
-        <button style="margin: 0 auto" type="submit" class="profile-button">Yes</button>
-    </form>
+    <div class="form-container">
+        <form class="login-form" method="post" novalidate>
+            {% csrf_token %}
+
+            <p>{{ form.title.label }}</p>
+            <p>{{ form.title }}</p>
+
+            <p>{{ form.image.label }}</p>
+            <p>{{ form.image }}</p>
+
+            <p>{{ form.up_to_price.label }}</p>
+            <p>{{ form.up_to_price }}</p>
+
+            <button style="margin: 0 auto" type="submit" class="profile-button">Yes</button>
+        </form>
+    </div>
+    
 {% endblock %}
