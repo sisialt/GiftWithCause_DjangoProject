@@ -9,6 +9,7 @@ footer {
 .footer-nav {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     margin-top: 0.5em;
 }
 
@@ -23,4 +24,8 @@ footer {
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 2px 5px rgb(75, 15, 15);
+}
+
+footer p {
+    padding-bottom: 1em;
 }
