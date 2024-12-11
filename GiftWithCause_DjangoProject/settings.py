@@ -30,13 +30,11 @@ SECRET_KEY = config('SECRET_KEY', default='unsafe-secret-key')
 #
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-# config('ALLOWED_HOSTS').split(',')
-
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-# DEBUG = True if config('DEBUG') == "True" else False
+#
+# DEBUG = config('DEBUG') == "True"
 #
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 
